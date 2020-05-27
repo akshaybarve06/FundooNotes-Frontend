@@ -1,3 +1,13 @@
+<!-- 
+* @Description :
+*
+* @file: Register.html
+* @overview: Register.html is page for register new user
+* @author: Akshay Dhananjay Barve
+* @version: 20.04
+* @since: 27/05/2020- Wednesday
+*
+-->
 <template>
   <div class="container">
     <h1>Register Here</h1>
@@ -6,6 +16,7 @@
       <div class="col-md-3"></div>
       <div class="col-md-6">
         <form>
+          <!--Input Field for Full Name-->
           <div class="form-group">
             <input type="text"
             class="form-control"
@@ -13,6 +24,7 @@
             placeholder="Enter Full Name" />
           </div>
           <br />
+          <!--Input Field for Mobile Number-->
           <div class="form-group">
             <input type="text"
             class="form-control"
@@ -20,6 +32,7 @@
             placeholder="Enter Mobile Number" />
           </div>
           <br />
+          <!--Input Field for Email Id-->
           <div class="form-group">
             <input
               type="email"
@@ -31,6 +44,7 @@
             <small id="emailHelp" class="form-text text-muted"></small>
           </div>
           <br />
+          <!--Input Field for Password-->
           <div class="form-group">
             <input
               type="password"

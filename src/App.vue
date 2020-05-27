@@ -1,3 +1,13 @@
+<!-- 
+* @Description :
+*
+* @file: App.vue
+* @overview: App.vue is main page of VUE app
+* @author: Akshay Dhananjay Barve
+* @version: 20.04
+* @since: 27/05/2020- Wednesday
+*
+-->
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -13,12 +23,13 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+          <!-- NAVIGATION FOR HOME PAGE-->
           <li class="nav-item active">
             <router-link class="nav-link" to="/">Home</router-link>
           </li>
+          <!-- NAVIGATION FOR ABOUT PAGE-->
           <li class="nav-item">
             <router-link class="nav-link" to="/about">About</router-link>
           </li>

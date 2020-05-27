@@ -1,3 +1,13 @@
+<!-- 
+* @Description :
+*
+* @file: Login.html
+* @overview: Login.html is page for register new user
+* @author: Akshay Dhananjay Barve
+* @version: 20.04
+* @since: 27/05/2020- Wednesday
+*
+-->
 <template>
   <div class="container">
     <h1>Login Form</h1>
@@ -6,6 +16,7 @@
       <div class="col-md-3"></div>
       <div class="col-md-6">
         <form>
+          <!--INPUT FIELD FOR EMAIL-->
           <div class="form-group">
             <input
               type="email"
@@ -17,6 +28,7 @@
             <small id="emailHelp" class="form-text text-muted"></small>
           </div>
           <br />
+          <!--INPUT FIELD FOR PASSWORD-->
           <div class="form-group">
             <input
               type="password"
