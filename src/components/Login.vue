@@ -16,29 +16,15 @@
       <div class="col-md-3"></div>
       <div class="col-md-6">
         <form>
-          <!--INPUT FIELD FOR EMAIL-->
           <div class="form-group">
-            <input
-              type="email"
-              class="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              placeholder="Enter email"
-            />
-            <small id="emailHelp" class="form-text text-muted"></small>
+            <input type="email" class="form-control" id="email" v-model="email" required placeholder="Enter Email-Id" />
           </div>
           <br />
-          <!--INPUT FIELD FOR PASSWORD-->
           <div class="form-group">
-            <input
-              type="password"
-              class="form-control"
-              id="exampleInputPassword1"
-              placeholder="Password"
-            />
+            <input type="password" class="form-control" id="password" v-model="password" required placeholder="Password" />
           </div>
           <br />
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Login</button>
         </form>
       </div>
       <div class="col-md-4"></div>
@@ -47,9 +33,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name:"login",
+  data(){
+    return{
+        email:"",
+        password:""
+    }
+  },
+};
 </script>
-
-<style scoped>
-
-</style>

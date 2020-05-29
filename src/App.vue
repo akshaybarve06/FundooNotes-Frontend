@@ -23,13 +23,12 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <!-- NAVIGATION FOR HOME PAGE-->
           <li class="nav-item active">
             <router-link class="nav-link" to="/">Home</router-link>
           </li>
-          <!-- NAVIGATION FOR ABOUT PAGE-->
           <li class="nav-item">
             <router-link class="nav-link" to="/about">About</router-link>
           </li>

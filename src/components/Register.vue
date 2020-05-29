@@ -16,42 +16,31 @@
       <div class="col-md-3"></div>
       <div class="col-md-6">
         <form>
-          <!--Input Field for Full Name-->
           <div class="form-group">
-            <input type="text"
-            class="form-control"
-            id="fullname"
-            placeholder="Enter Full Name" />
+            <input type="text" class="form-control" id="fullname" required placeholder="Enter Full Name" />
           </div>
           <br />
-          <!--Input Field for Mobile Number-->
           <div class="form-group">
-            <input type="text"
-            class="form-control"
-            id="mobile" 
-            placeholder="Enter Mobile Number" />
+            <input type="text" class="form-control" id="mobile" required placeholder="Enter Mobile Number" />
           </div>
           <br />
-          <!--Input Field for Email Id-->
           <div class="form-group">
             <input
-              type="email"
-              class="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              placeholder="Enter Email Id"
+              type="email" class="form-control" id="exampleInputEmail1" required placeholder="Enter Email Id"
             />
             <small id="emailHelp" class="form-text text-muted"></small>
           </div>
           <br />
-          <!--Input Field for Password-->
+          <div class="form-group">
+            <input type="password" class="form-control" id="password" required v-model="password" placeholder="Enter Password" />
+            <div v-if=" password.length>1 && password.length < 6" class="text-danger">Password Must Greater Than 6 Characters</div>
+          </div>
+          <br />
           <div class="form-group">
             <input
-              type="password"
-              class="form-control"
-              id="exampleInputPassword1"
-              placeholder="Enter Password"
+              type="password" class="form-control" id="reenterpassword" required v-model="reenterpassword" placeholder="Confirm Password"
             />
+            <div v-if=" password != reenterpassword " class="text-danger">Ensure That Both Passwords are same</div>
           </div>
           <br />
           <button type="submit" class="btn btn-primary">Register</button>
@@ -63,7 +52,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name:"register",
+  data(){
+    return{
+      email:"",
+      password:"",
+      reenterpassword:""
+    }
+  },
+};
 </script>
 
 <style>
