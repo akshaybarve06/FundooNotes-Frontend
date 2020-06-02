@@ -1,52 +1,57 @@
 <!-- 
 * @Description :
 *
-* @file: Login.html
-* @overview: Login.html is page for register new user
+* @file: Login.vue
+* @overview: Login.vue is page for register new user
 * @author: Akshay Dhananjay Barve
 * @version: 20.04
 * @since: 27/05/2020- Wednesday
 *
 -->
 <template>
-  <div class="container">
-    <h1>Login Form</h1>
-    <br />
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
-        <form>
-          <div class="form-group">
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              v-model="input.email"
-              required
-              placeholder="Enter Email-Id"
-            />
-          </div>
-          <br />
-          <div class="form-group">
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              v-model="input.password"
-              required
-              placeholder="Password"
-            />
-          </div>
-          <br />
-          <button type="submit" v-on:click.prevent="login()" class="btn btn-primary">Login</button>
-        </form>
-      </div>
-      <div class="col-md-4"></div>
-    </div>
-  </div>
+  <v-container fill-height>
+    <v-layout align-center justify-center>
+      <v-flex xs12 sm4 md8>
+        <v-form>
+          <v-card class="elevation-12">
+            <v-toolbar dark color="blue">
+              <v-toolbar-title>Fundoo Login</v-toolbar-title>
+            </v-toolbar>
+            <v-card-text>
+              <v-text-field
+                type="email"
+                v-model="input.email"
+                name="email"
+                label="Enter Email"
+                autocomplete="off"
+              ></v-text-field>
+              <v-text-field
+                type="password"
+                v-model="input.password"
+                name="password"
+                label="Enter Password"
+                autocomplete="off"
+              ></v-text-field>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn round color="primary" dark v-on:click="Login()">Login</v-btn>
+              <v-spacer></v-spacer>
+              <a href="ForgetPassword.vue">Forgot Password?</a>
+            </v-card-actions>
+          </v-card>
+        </v-form>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
+
 <script>
+import axios from "axios";
 export default {
+  name: "Login",
+  props: {
+    msg: String
+  },
   data() {
     return {
       input: {
@@ -57,23 +62,20 @@ export default {
     };
   },
   methods: {
-    login: function() {
-      this.$http
-        .post("http://fundoonotes.incubation.bridgelabz.com/api/user/login", {
+    Login: function() {
+      axios
+        .post(`http://fundoonotes.incubation.bridgelabz.com/api/user/login`, {
           email: this.input.email,
           password: this.input.password
         })
-        .then(function(data) {
-          console.log("Data..." + data);
-          alert("Login Successful..!")
-        }),
-        error => {
-          console.error("Sorry..Couldn't Login.." + error);
-        };
+        .then(function(response) {
+          alert("Login Successfull");
+          console.log(response);
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
     }
   }
 };
 </script>
-
-<style>
-</style>

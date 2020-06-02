@@ -1,4 +1,4 @@
-# project1
+# fundoonotes
 
 ## Project setup
 ```

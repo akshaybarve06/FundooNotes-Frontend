@@ -1,163 +1,111 @@
 <!-- 
 * @Description :
 *
-* @file: Register.html
-* @overview: Register.html is page for register new user
+* @file: Register.vue
+* @overview: Register.vue is page for register new user
 * @author: Akshay Dhananjay Barve
 * @version: 20.04
 * @since: 27/05/2020- Wednesday
 *
 -->
 <template>
-  <div class="container">
-    <h1>Register Here</h1>
-    <br />
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
-        <form>
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control"
-            id="firstName"
-            required
-            v-model="input.firstName"
-            placeholder="Enter First Name"
-          />
-        </div>
-        <br />
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control"
-            id="lastName"
-            required
-            v-model="input.lastName"
-            placeholder="Enter Last Name"
-          />
-        </div>
-        <br />
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control"
-            id="phoneNumber"
-            v-model="input.phoneNumber"
-            placeholder="Enter Mobile Number"
-          />
-        </div>
-        <br />
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control"
-            id="role"
-            required
-            v-model="input.role"
-            placeholder="Enter Role"
-          />
-        </div>
-        <br />
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control"
-            id="service"
-            required
-            v-model="input.service"
-            placeholder="Enter Service"
-          />
-        </div>
-        <br />
-        <div class="form-group">
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            required
-            v-model="input.email"
-            placeholder="Enter Email Id"
-          />
-        </div>
-        <br />
-        <div class="form-group">
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            required
-            v-model="input.password"
-            placeholder="Enter Password"
-          />
-          <div v-if=" input.password.length>1 && input.password.length < 6" class="text-danger">Password Must Greater Than 6 Characters</div>
-        </div>
-        <br />
-        <div class="form-group">
-          <input
-            type="password"
-            class="form-control"
-            id="confirmpassword"
-            required
-            v-model="input.confirmpassword"
-            placeholder="Enter Confirm Password"
-          />
-        <div v-if=" input.password != input.confirmpassword " class="text-danger">Ensure That Both Passwords are same</div>
-        </div>
-        <br />
-        <button v-on:click="register()" class="btn btn-primary">Register</button>
-        </form>
-      </div>
-      <div class="col-md-3"></div>
-    </div>
-  </div>
+  <v-container fill-height cols="12" sm="6" md="6">
+    <v-layout row justify-space-around>
+      <v-flex xs12 sm8 md8>
+        <v-form>
+          <v-card class="elevation-20">
+            <v-toolbar dark color="cyan">
+              <v-toolbar-title>Fundoo Register</v-toolbar-title>
+            </v-toolbar>
+            <v-card-text>
+              <v-text-field
+                type="text"
+                v-model="input.firstName"
+                name="firstName"
+                label="First Name"
+                autocomplete="off"
+              ></v-text-field>
+              <v-text-field
+                type="text"
+                v-model="input.lastName"
+                name="lastName"
+                label="Last Name"
+                autocomplete="off"
+              ></v-text-field>
+              <v-text-field
+                type="text"
+                v-model="input.role"
+                name="role"
+                label="Role"
+                autocomplete="off"
+              ></v-text-field>
+              <v-text-field
+                type="email"
+                v-model="input.email"
+                name="email"
+                label="Email Id"
+                autocomplete="off"
+              ></v-text-field>
+              <v-text-field
+                type="password"
+                v-model="input.password"
+                name="password"
+                label="Password"
+              ></v-text-field>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn v-on:click="Register()" round color="primary" dark>Sign up</v-btn>
+              <a href="/login">Already Registered?</a>
+              <v-stepper :vertical="$vuetify.breakpoint.xsOnly"></v-stepper>
+            </v-card-actions>
+          </v-card>
+        </v-form>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
+import axios from "axios";
 export default {
+  name: "Registration",
+  props: {
+    msg: String
+  },
   data() {
     return {
       input: {
         firstName: "",
         lastName: "",
-        phoneNumber: "",
         role: "",
-        service: "",
-        createdDate: "",
-        modifiedDate: "",
         email: "",
-        password: "",
-        confirmpassword: ""
+        password: ""
       },
       response: ""
     };
   },
   methods: {
-    register: function() {
-      this.$http
+    Register: function() {
+      axios
         .post(
-          "http://fundoonotes.incubation.bridgelabz.com/api/user/userSignUp",
+          `http://fundoonotes.incubation.bridgelabz.com/api/user/userSignUp`,
           {
             firstName: this.input.firstName,
             lastName: this.input.lastName,
-            phoneNumber: this.input.phoneNumber,
             role: this.input.role,
-            service: this.input.service,
             email: this.input.email,
-            password: this.input.password
+            password: this.input.password,
+            service: "service"
           }
         )
-        .then(function(data) {
-          console.log("Data..." + data);
-          alert("Registered Successfully..!");
-        }),
-        error => {
-          console.error("Sorry..Couldn't Register.." + error);
-        };
-      }
+        .then(function(response) {
+          console.log(response);
+          console.log("DONE");
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
     }
+  }
 };
 </script>
-
-<style>
-</style>
