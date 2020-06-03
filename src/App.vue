@@ -12,7 +12,7 @@
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">First Vue Project</a>
-      <button
+      <v-btn
         class="navbar-toggler"
         type="button"
         data-toggle="collapse"
@@ -22,7 +22,7 @@
         aria-label="Toggle navigation"
       >
         <span class="navbar-toggler-icon"></span>
-      </button>
+      </v-btn>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">

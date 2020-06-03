@@ -23,6 +23,7 @@
                 v-model="input.email"
                 name="email"
                 label="Enter Email"
+                :rules="['Required']"
                 autocomplete="off"
               ></v-text-field>
               <v-text-field
@@ -30,13 +31,13 @@
                 v-model="input.password"
                 name="password"
                 label="Enter Password"
-                autocomplete="off"
+                :rules="['Required']"
               ></v-text-field>
             </v-card-text>
             <v-card-actions>
-              <v-btn round color="primary" dark v-on:click="Login()">Login</v-btn>
+              <v-btn round color="primary" dark v-on:click="userData()">Login</v-btn>
               <v-spacer></v-spacer>
-              <a href="ForgetPassword.vue">Forgot Password?</a>
+              <a href="/forgetpassword">Forgot Password?</a>
             </v-card-actions>
           </v-card>
         </v-form>
@@ -46,7 +47,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import user from '../services/user.service'
 export default {
   name: "Login",
   props: {
@@ -61,20 +62,18 @@ export default {
       response: ""
     };
   },
-  methods: {
-    Login: function() {
-      axios
-        .post(`http://fundoonotes.incubation.bridgelabz.com/api/user/login`, {
-          email: this.input.email,
-          password: this.input.password
-        })
-        .then(function(response) {
-          alert("Login Successfull");
-          console.log(response);
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
+    methods: {
+    async userData() {
+      try {
+        const userDetails = {
+            email: this.input.email,
+            password: this.input.password
+        };
+        const response = await user.login(userDetails);
+        this.msg = response.msg;
+      }catch (error) {
+        console.log(error)
+      }
     }
   }
 };

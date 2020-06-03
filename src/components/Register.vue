@@ -23,6 +23,7 @@
                 v-model="input.firstName"
                 name="firstName"
                 label="First Name"
+                :rules="['Required']"
                 autocomplete="off"
               ></v-text-field>
               <v-text-field
@@ -30,6 +31,7 @@
                 v-model="input.lastName"
                 name="lastName"
                 label="Last Name"
+                :rules="['Required']"
                 autocomplete="off"
               ></v-text-field>
               <v-text-field
@@ -37,6 +39,7 @@
                 v-model="input.role"
                 name="role"
                 label="Role"
+                :rules="['Required']"
                 autocomplete="off"
               ></v-text-field>
               <v-text-field
@@ -44,6 +47,7 @@
                 v-model="input.email"
                 name="email"
                 label="Email Id"
+                :rules="['Required']"
                 autocomplete="off"
               ></v-text-field>
               <v-text-field
@@ -51,10 +55,11 @@
                 v-model="input.password"
                 name="password"
                 label="Password"
+                :rules="['Required']"
               ></v-text-field>
             </v-card-text>
             <v-card-actions>
-              <v-btn v-on:click="Register()" round color="primary" dark>Sign up</v-btn>
+              <v-btn v-on:click="register()" round color="primary" dark>Sign up</v-btn>
               <a href="/login">Already Registered?</a>
               <v-stepper :vertical="$vuetify.breakpoint.xsOnly"></v-stepper>
             </v-card-actions>
@@ -66,7 +71,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import user from "../services/user.service";
 export default {
   name: "Registration",
   props: {
@@ -84,27 +89,22 @@ export default {
       response: ""
     };
   },
-  methods: {
-    Register: function() {
-      axios
-        .post(
-          `http://fundoonotes.incubation.bridgelabz.com/api/user/userSignUp`,
-          {
+    methods: {
+    async register() {
+      try {
+        const newUser = {
             firstName: this.input.firstName,
             lastName: this.input.lastName,
             role: this.input.role,
+            service: "service",
             email: this.input.email,
-            password: this.input.password,
-            service: "service"
-          }
-        )
-        .then(function(response) {
-          console.log(response);
-          console.log("DONE");
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
+            password: this.input.password
+        };
+        const response = await user.signUp(newUser);
+        this.msg = response.msg;
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 };
