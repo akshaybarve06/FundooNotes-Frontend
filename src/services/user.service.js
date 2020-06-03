@@ -13,7 +13,9 @@ export default {
           .post(url + 'userSignUp/', credentials)
           .then(response => response.data);
     },
-    getSecretContent() {
-        return axios.get(url + 'secret-route/').then(response => response.data);
-      }
+    resetPassword(credentials){
+      return axios
+          .post(url + 'reset', credentials)
+          .then(response => response.data);
+    }
 }
