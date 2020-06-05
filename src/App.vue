@@ -8,40 +8,38 @@
 * @since: 27/05/2020- Wednesday
 *
 -->
-<template>
-  <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">First Vue Project</a>
-      <v-btn
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </v-btn>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <router-link class="nav-link" to="/">Home</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/about">About</router-link>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <router-link class="nav-link" to="/login">Login</router-link>
-          <router-link class="nav-link" to="/register">Register</router-link>
-        </form>
-      </div>
-    </nav>
-    <br />
-    <router-view />
-  </div>
+<template>
+  <v-card
+    color="yellow lighten-4"
+    flat
+    height="350px"
+    tile
+  >
+    <v-toolbar dense>
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-toolbar-title>Fundoo Notes</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>mdi-dots-vertical</v-icon>
+      </v-btn>
+      <v-col cols="12" sm="">
+        <v-select
+          :items="item1"
+          label="Solo field"
+          dense
+          solo
+        ></v-select>
+      </v-col>
+    </v-toolbar>
+  <router-view />
+  </v-card>
 </template>
 
 <style>

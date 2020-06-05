@@ -30,24 +30,33 @@
                 dark
                 flat
               >
-                <v-toolbar-title>Forgotten Password</v-toolbar-title>
+                <v-toolbar-title>Enter New Password</v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
               <v-text-field
-                type="email"
-                v-model="input.email"
-                name="email"
-                label="Enter Email"
+                type="password"
+                v-model="input.password"
+                name="password"
+                label="Enter Password"
                 :rules="['Required']"
                 autocomplete="off"
               ></v-text-field>
+              <v-text-field
+                type="password"
+                v-model="input.confirmPaswword"
+                name="confirmPassword"
+                label="Confirm Password"
+                :rules="['Required']"
+                autocomplete="off"
+              ></v-text-field>
+              <div v-if=" input.password != input.confirmPassword " class="text-danger">Ensure That Both Passwords are same</div>
             </v-card-text>
               <v-card-actions>
-                <v-spacer></v-spacer>
-              <v-btn round color="cyan" dark v-on:click="forgetPassword()">Submit</v-btn>
+              <v-btn round color="cyan" dark v-on:click="resetPassword()">Reset</v-btn>
+              <v-spacer></v-spacer>
               <a href="/login">Back To Login</a>
-              </v-card-actions>
+            </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
@@ -66,21 +75,21 @@ export default {
   data() {
     return {
       input: {
-        email: ""
+        password: "",
+        confirmPassword:""
       },
       response: ""
     };
   },
   methods: {
-    async forgetPassword() {
-      8
+    async resetPassword() {
       try {
         const userDetails = {
-          email: this.input.email
+          password: this.input.password
         };
-        const response = await user.forget(userDetails);
-        //this.$router.push('/resetpassword')
-        alert("Reset Link Sent On Email Id")
+        const response = await user.reset(userDetails);
+        alert("Password Reset Successfully")
+        this.$router.push('/login') 
         this.msg = response.msg;
       } catch (error) {
         console.log(error);

@@ -9,15 +9,31 @@
 *
 -->
 <template>
-  <v-container fill-height>
-    <v-layout align-center justify-center>
-      <v-flex xs12 sm4 md8>
-        <v-form>
-          <v-card class="elevation-12">
-            <v-toolbar dark color="blue">
-              <v-toolbar-title>Fundoo Login</v-toolbar-title>
-            </v-toolbar>
-            <v-card-text>
+  <v-app id="inspire">
+    <v-content>
+      <v-container
+        class="fill-height"
+        fluid
+      >
+        <v-row
+          align="center"
+          justify="center"
+        >
+          <v-col
+            cols="12"
+            sm="8"
+            md="4"
+          >
+            <v-card class="elevation-12">
+              <v-toolbar
+                color="cyan"
+                dark
+                flat
+              >
+                <v-toolbar-title>Fundoo Login</v-toolbar-title>
+                <v-spacer></v-spacer>
+              </v-toolbar>
+              <v-card-text>
               <v-text-field
                 type="email"
                 v-model="input.email"
@@ -34,16 +50,17 @@
                 :rules="['Required']"
               ></v-text-field>
             </v-card-text>
-            <v-card-actions>
-              <v-btn round color="primary" dark v-on:click="userData()">Login</v-btn>
-              <v-spacer></v-spacer>
-              <a href="/forgetpassword">Forgot Password?</a>
-            </v-card-actions>
-          </v-card>
-        </v-form>
-      </v-flex>
-    </v-layout>
-  </v-container>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="cyan" dark v-on:click="userData()" >Login</v-btn>
+                <a href="/forgetpassword">Forgot Password?</a>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
@@ -70,7 +87,11 @@ export default {
             password: this.input.password
         };
         const response = await user.login(userDetails);
+        localStorage.setItem('access_token', response.id );
+        alert("Login Successful..")
         this.msg = response.msg;
+        this.$router.push('/dashboard') 
+
       }catch (error) {
         console.log(error)
       }
