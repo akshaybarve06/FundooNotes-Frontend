@@ -20,7 +20,7 @@ export default {
     },
     reset(credentials){
       return axios
-          .post(url + 'reset-password/access_token=${token}', credentials)
+          .post(url + 'reset-password?access_token=${token}', credentials)
           .then(response => response.data);
     }
 }

@@ -5,6 +5,7 @@ import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
 import ForgetPassword from '../components/ForgetPassword.vue'
 import ResetPassword from '../components/ResetPassword.vue'
+import Dashboard from '../components/Dashboard.vue'
 
 Vue.use(VueRouter)
 
@@ -13,6 +14,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard
   },
   {
     path: '/login',
@@ -30,7 +36,7 @@ const routes = [
     component: ForgetPassword
   },
   {
-    path: '/resetpassword',
+    path: 'resetpassword/:token',
     name: 'ResetPassword',
     component: ResetPassword
   },
