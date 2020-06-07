@@ -9,62 +9,41 @@
 *
 -->
 <template>
-  <v-app id="inspire">
-    <v-content>
-      <v-container
-        class="fill-height"
-        fluid
-      >
-        <v-row
-          align="center"
-          justify="center"
-        >
-          <v-col
-            cols="12"
-            sm="8"
-            md="4"
-          >
-            <v-card class="elevation-12">
-              <v-toolbar
-                color="cyan"
-                dark
-                flat
-              >
+    <v-card class="elevation-12" >
+        <v-row justify="center" align="center">
+          <v-col sm="6" md="5">
+              <v-toolbar color="cyan" >
                 <v-toolbar-title>Fundoo Login</v-toolbar-title>
-                <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
-              <v-text-field
-                type="email"
-                v-model="input.email"
-                name="email"
-                label="Enter Email"
-                :rules="['Required']"
-                autocomplete="off"
-              ></v-text-field>
-              <v-text-field
-                type="password"
-                v-model="input.password"
-                name="password"
-                label="Enter Password"
-                :rules="['Required']"
-              ></v-text-field>
-            </v-card-text>
+                <v-text-field
+                  type="email"
+                  v-model="input.email"
+                  name="email"
+                  label="Enter Email"
+                  :rules="['Required']"
+                  autocomplete="off"
+                ></v-text-field>
+                <v-text-field
+                  type="password"
+                  v-model="input.password"
+                  name="password"
+                  label="Enter Password"
+                  :rules="['Required']"
+                ></v-text-field>
+              </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="cyan" dark v-on:click="userData()" >Login</v-btn>
+                <v-btn color="cyan" dark v-on:click="userData()">Login</v-btn>
                 <a href="/forgetpassword">Forgot Password?</a>
               </v-card-actions>
-            </v-card>
           </v-col>
         </v-row>
-      </v-container>
-    </v-content>
-  </v-app>
+      </v-card>
 </template>
 
 <script>
-import user from '../services/user.service'
+import user from "../services/user.service";
 export default {
   name: "Login",
   props: {
@@ -79,21 +58,20 @@ export default {
       response: ""
     };
   },
-    methods: {
+  methods: {
     async userData() {
       try {
         const userDetails = {
-            email: this.input.email,
-            password: this.input.password
+          email: this.input.email,
+          password: this.input.password
         };
         const response = await user.login(userDetails);
-        localStorage.setItem('access_token', response.id );
-        alert("Login Successful..")
+        localStorage.setItem("access_token", response.id);
+        alert("Login Successful..");
         this.msg = response.msg;
-        this.$router.push('/dashboard') 
-
-      }catch (error) {
-        console.log(error)
+        this.$router.push("/dashboard");
+      } catch (error) {
+        console.log(error);
       }
     }
   }

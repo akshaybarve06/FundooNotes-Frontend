@@ -10,6 +10,6 @@
 -->
 <template>
   <div class="home">
-    <img src="../assets/notes.jpg" width="1440" height="660" />
+
   </div>
 </template>
