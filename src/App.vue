@@ -9,7 +9,7 @@
 *
 -->
 <template>
-  <v-app class="yello loghten-4">
+  <v-app class="yello lighten-4">
     <Navbar />
     <v-content>
       <router-view>
@@ -19,14 +19,5 @@
   </v-app>
 </template>
 <script>
-import Navbar from './components/Navbar'
-export default {
-  name:'App',
-  components:{ Navbar},
-  data(){
-    return{
 
-    }
-  }
-}
 </script>

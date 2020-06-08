@@ -44,8 +44,8 @@
               ></v-text-field>
             </v-card-text>
               <v-card-actions>
-                <v-spacer></v-spacer>
-              <v-btn round color="cyan" dark v-on:click="forgetPassword()">Submit</v-btn>
+              <v-btn round class="cyan ma-3 pa-4 " dark v-on:click="forgetPassword()">Submit</v-btn>
+              <v-spacer></v-spacer>
               <a href="/login">Back To Login</a>
               </v-card-actions>
             </v-card>

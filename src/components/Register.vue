@@ -61,7 +61,8 @@
                 ></v-text-field>
               </v-card-text>
               <v-card-actions>
-                <v-btn v-on:click="register()" round color="primary" dark>Sign up</v-btn>
+                <v-btn v-on:click="register()" round class="cyan ma-3 pa-3 " dark>Sign up</v-btn>
+                <v-spacer></v-spacer>
                 <a href="/login">Already Registered?</a>
                 <v-stepper :vertical="$vuetify.breakpoint.xsOnly"></v-stepper>
               </v-card-actions>

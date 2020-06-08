@@ -10,19 +10,16 @@
 -->
 <template>
   <nav>
-    <v-toolbar flat app height="70px" class="amber accent-3">
+    <v-toolbar height="70px" class="amber accent-3">
       <v-icon class="gray--text" @click="drawer= !drawer">mdi-reorder-horizontal</v-icon>
-      <v-toolbar-title class="text-uppercase gray--text">
-        <span class="ma-5 pa-4 font-weight-light">Fundoo Notes</span>
+        <span class="ma-5 pa-4 font-weight-light">FUNDOO NOTES</span>
         <span></span>
-      </v-toolbar-title>
       <v-text-field
         dense
         class=" ma-5 pa-7"
         v-model="search"
         placeholder="Search.."
         prepend-icon="mdi-magnify"
-        :append-icon-cb="() => (openSearch = !openSearch)"
         hide-details
       ></v-text-field>
       <v-icon class="ma-3 pa-4">mdi-cart</v-icon>
@@ -34,7 +31,6 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title">Options</v-list-item-title>
-          <v-list-item-subtitle></v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>

@@ -1,16 +1,21 @@
 <template>
   <v-app id="inspire">
     <v-content>
-      
+      <Navbar />
 
     </v-content>
   </v-app>
 </template>
 
 <script>
-  export default {
-    props: {
-      source: String,
-    },
+import Navbar from '../components/Navbar'
+export default {
+  name:'App',
+  components:{ Navbar},
+  data(){
+    return{
+
+    }
   }
+}
 </script>

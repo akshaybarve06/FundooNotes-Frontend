@@ -38,7 +38,7 @@
                 type="password"
                 v-model="input.password"
                 name="password"
-                label="Enter Password"
+                label="New Password"
                 :rules="['Required']"
                 autocomplete="off"
               ></v-text-field>
@@ -53,7 +53,7 @@
               <div v-if=" input.password != input.confirmPassword " class="text-danger">Ensure That Both Passwords are same</div>
             </v-card-text>
               <v-card-actions>
-              <v-btn round color="cyan" dark v-on:click="resetPassword()">Reset</v-btn>
+              <v-btn round color="cyan ma-3 pa-4" dark v-on:click="resetPassword()">Reset</v-btn>
               <v-spacer></v-spacer>
               <a href="/login">Back To Login</a>
             </v-card-actions>
