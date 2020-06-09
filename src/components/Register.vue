@@ -37,14 +37,6 @@
                   autocomplete="off"
                 ></v-text-field>
                 <v-text-field
-                  type="text"
-                  v-model="input.role"
-                  name="role"
-                  label="Role"
-                  :rules="['Required']"
-                  autocomplete="off"
-                ></v-text-field>
-                <v-text-field
                   type="email"
                   v-model="input.email"
                   name="email"
@@ -61,11 +53,11 @@
                 ></v-text-field>
               </v-card-text>
               <v-card-actions>
-                <v-btn v-on:click="register()" round class="cyan ma-3 pa-3 " dark>Sign up</v-btn>
-                <v-spacer></v-spacer>
-                <a href="/login">Already Registered?</a>
-                <v-stepper :vertical="$vuetify.breakpoint.xsOnly"></v-stepper>
-              </v-card-actions>
+                <a class="ma-2 pa-2 " href="/login">Login</a>
+                  <v-spacer></v-spacer>
+                  <v-btn class="cyan ma-3 pa-2" dark v-on:click="register()">Sign up</v-btn>
+              <v-stepper :vertical="$vuetify.breakpoint.xsOnly"></v-stepper>
+            </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
@@ -77,7 +69,7 @@
 <script>
 import user from "../services/user.service";
 export default {
-  name: "Registration",
+  name: "Register",
   props: {
     msg: String
   },
@@ -86,7 +78,7 @@ export default {
       input: {
         firstName: "",
         lastName: "",
-        role: "",
+        service: "advanced",
         email: "",
         password: ""
       },
@@ -99,8 +91,7 @@ export default {
         const newUser = {
           firstName: this.input.firstName,
           lastName: this.input.lastName,
-          role: this.input.role,
-          service: "service",
+          service: "advanced",
           email: this.input.email,
           password: this.input.password
         };

@@ -10,13 +10,13 @@
 -->
 <template>
   <nav>
-    <v-toolbar height="70px" class="amber accent-3">
+    <v-toolbar height="70px" class="amber accent-3" flat>
       <v-icon class="gray--text" @click="drawer= !drawer">mdi-reorder-horizontal</v-icon>
-        <span class="ma-5 pa-4 font-weight-light">FUNDOO NOTES</span>
-        <span></span>
+      <span class="ma-5 pa-4 font-weight-light">FUNDOO NOTES</span>
+      <span></span>
       <v-text-field
         dense
-        class=" ma-5 pa-7"
+        class="ma-5 pa-7"
         v-model="search"
         placeholder="Search.."
         prepend-icon="mdi-magnify"
@@ -24,76 +24,75 @@
       ></v-text-field>
       <v-icon class="ma-3 pa-4">mdi-cart</v-icon>
       <v-icon class="ma-3 pa-4">mdi-view-agenda</v-icon>
-      <v-icon class="ma-3 pa-4">mdi-account</v-icon>
+      <v-icon @click="logout()" class="ma-3 pa-4">mdi-logout</v-icon>
     </v-toolbar>
 
     <v-navigation-drawer v-model="drawer">
-      <v-list-item>
+      <!-- <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="title">Options</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-divider></v-divider>
+      <v-divider></v-divider>-->
 
       <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.title" link>
-          <v-list-item-icon>
-            <v-icon class="mdi-24px">{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title class="mdi-24px">{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
+        <v-list-item v-on:click="createNote()">
+          <v-icon>mdi-lightbulb</v-icon>
+          <v-list-item-title class="mdi-24px ma-4">Note</v-list-item-title>
+        </v-list-item>
+        <v-list-item link>
+          <v-icon>mdi-calendar-clock</v-icon>
+          <v-list-item-title class="mdi-24px ma-4">Reminder</v-list-item-title>
+        </v-list-item>
+        <v-divider></v-divider>
+
+        <v-list-item-subtitle>Lables</v-list-item-subtitle>
+        <v-list-item>
+          <v-icon>mdi-plus</v-icon>
+          <v-list-item-title class="mdi-24px ma-5">Create New Lable</v-list-item-title>
+        </v-list-item>
+        <v-divider></v-divider>
+
+        <v-list-item link>
+          <v-icon>mdi-clipboard-arrow-down</v-icon>
+          <v-list-item-title class="mdi-24px ma-4">Archives</v-list-item-title>
+        </v-list-item>
+        <v-list-item link>
+          <v-icon>mdi-delete</v-icon>
+          <v-list-item-title class="mdi-24px ma-4">Trash</v-list-item-title>
+        </v-list-item>
+        <v-divider></v-divider>
+
+        <v-list-item link>
+          <v-icon>mdi-help-box</v-icon>
+          <v-list-item-title class="mdi-24px ma-4">Help</v-list-item-title>
         </v-list-item>
       </v-list>
-      <v-divider></v-divider>
-
-      <v-col cols="8" sm="12">
-        <p>Lables</p>
-        <v-overflow-btn
-          class="my-2"
-          :items="dropdown_icon"
-          label="All Lables"
-          segmented
-          target="#dropdown-example"
-        ></v-overflow-btn>
-      </v-col>
-      <v-divider></v-divider>
-
-      <v-list dense nav>
-        <v-list-item v-for="item in items2" :key="item.title" link>
-          <v-list-item-icon>
-            <v-icon class="mdi-24px">{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title class="mdi-24px">{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <v-divider></v-divider>
     </v-navigation-drawer>
   </nav>
 </template>
 
 <script>
+import user from '../services/user.service'
 export default {
   data() {
     return {
-      drawer: false,
-      items: [
-        { title: "Note", icon: "mdi-lightbulb" },
-        { title: "Reminder", icon: "mdi-calendar-clock" }
-      ],
-      items2: [
-        { title: "Archives", icon: "mdi-clipboard-arrow-down" },
-        { title: "Trash", icon: "mdi-delete" }
-      ],
-      dropdown_icon: [
-        { text: "New", callback: () => console.log("list") },
-        { text: "Favorite", callback: () => console.log("favorite") },
-        { text: "General", callback: () => console.log("delete") }
-      ],
-      right: null
+      drawer: false
     };
+  },
+  methods: {
+    createNote() {
+      this.$router.push("/createnote");
+    },
+    logout(){
+      try {
+        const response = user.logout();
+        this.snackbar = true;
+        this.msg = response.msg;
+        this.$router.push("/login");
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 };
 </script>

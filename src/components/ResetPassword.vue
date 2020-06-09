@@ -36,8 +36,8 @@
               <v-card-text>
               <v-text-field
                 type="password"
-                v-model="input.password"
-                name="password"
+                v-model="input.newPassword"
+                name="newPassword"
                 label="New Password"
                 :rules="['Required']"
                 autocomplete="off"
@@ -50,12 +50,11 @@
                 :rules="['Required']"
                 autocomplete="off"
               ></v-text-field>
-              <div v-if=" input.password != input.confirmPassword " class="text-danger">Ensure That Both Passwords are same</div>
             </v-card-text>
               <v-card-actions>
-              <v-btn round color="cyan ma-3 pa-4" dark v-on:click="resetPassword()">Reset</v-btn>
-              <v-spacer></v-spacer>
-              <a href="/login">Back To Login</a>
+                  <a class="ma-2 pa-2 " href="/login">Back To Login</a>
+                  <v-spacer></v-spacer>
+                  <v-btn round class="cyan ma-3 pa-2" dark v-on:click="resetPassword()">Reset</v-btn>
             </v-card-actions>
             </v-card>
           </v-col>
@@ -68,14 +67,14 @@
 <script>
 import user from "../services/user.service";
 export default {
-  name: "Login",
+  name: "ResetPassword",
   props: {
     msg: String
   },
   data() {
     return {
       input: {
-        password: "",
+        newPassword: "",
         confirmPassword:""
       },
       response: ""
@@ -85,9 +84,11 @@ export default {
     async resetPassword() {
       try {
         const userDetails = {
-          password: this.input.password
+          newPassword: this.input.newPassword
         };
-        const response = await user.reset(userDetails);
+        const token=this.$route.params.token
+        console.log("token..."+token)
+        const response = await user.reset(userDetails,token);
         alert("Password Reset Successfully")
         this.$router.push('/login') 
         this.msg = response.msg;

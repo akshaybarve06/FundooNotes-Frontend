@@ -36,9 +36,9 @@
                     ></v-text-field>
                   </v-card-text>
                   <v-card-actions>
-                    <v-btn class="cyan ma-3 pa-4 " dark v-on:click="userData()">Login</v-btn>
+                    <a class="ma-2 pa-2 " href="/forgetpassword">Forgot Password ?</a>
                     <v-spacer></v-spacer>
-                    <a href="/forgetpassword">Forgot Password?</a>
+                    <v-btn class="cyan ma-3 pa-2" dark v-on:click="userData()">Login</v-btn>
                   </v-card-actions>
             </v-card>
           </v-col>
@@ -83,3 +83,6 @@ export default {
   }
 };
 </script>
+<style lang="stylus" scoped>
+
+</style>

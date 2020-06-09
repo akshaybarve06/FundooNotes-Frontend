@@ -44,9 +44,9 @@
               ></v-text-field>
             </v-card-text>
               <v-card-actions>
-              <v-btn round class="cyan ma-3 pa-4 " dark v-on:click="forgetPassword()">Submit</v-btn>
-              <v-spacer></v-spacer>
-              <a href="/login">Back To Login</a>
+                <a class="ma-2 pa-2 " href="/login">Back To Login</a>
+                <v-spacer></v-spacer>
+                <v-btn class="cyan ma-3 pa-2" dark v-on:click="forgetPassword()">Send Reset Link</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -59,7 +59,7 @@
 <script>
 import user from "../services/user.service";
 export default {
-  name: "Login",
+  name: "ForgetPassword",
   props: {
     msg: String
   },

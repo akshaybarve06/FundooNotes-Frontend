@@ -17,7 +17,7 @@
             <v-col cols="2"  md="2">
               <v-card class="elevation-12 tile"  >
                 <v-spacer></v-spacer>
-                <v-btn class="cyan ma-7 pa-9 " align dark v-on:click="proceed()">Continue</v-btn>
+                <v-btn class="cyan ma-7 pa-7 " align dark v-on:click="proceed()">Continue</v-btn>
               </v-card>
             </v-col>
           </v-row>
