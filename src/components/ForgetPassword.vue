@@ -30,7 +30,7 @@
                 dark
                 flat
               >
-                <v-toolbar-title>Forgotten Password</v-toolbar-title>
+                <v-toolbar-title>Forget Password</v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>

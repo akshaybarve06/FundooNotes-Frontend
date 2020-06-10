@@ -22,12 +22,17 @@
         prepend-icon="mdi-magnify"
         hide-details
       ></v-text-field>
+      
       <v-icon class="ma-3 pa-4">mdi-cart</v-icon>
       <v-icon class="ma-3 pa-4">mdi-view-agenda</v-icon>
       <v-icon @click="logout()" class="ma-3 pa-4">mdi-logout</v-icon>
     </v-toolbar>
-
-    <v-navigation-drawer v-model="drawer">
+  <v-navigation-drawer v-model="drawer" fixed app
+        temporary
+        hide-overlay = "true"
+        class="grey lighten-4"
+        disable-resize-watcher
+        >
       <!-- <v-list-item>
         <v-list-item-content>
         </v-list-item-content>
@@ -53,7 +58,7 @@
         <v-divider></v-divider>
 
         <v-list-item link>
-          <v-icon>mdi-clipboard-arrow-down</v-icon>
+          <v-icon>mdi-package-down</v-icon>
           <v-list-item-title class="mdi-24px ma-4">Archives</v-list-item-title>
         </v-list-item>
         <v-list-item link>
@@ -85,7 +90,8 @@ export default {
     },
     logout(){
       try {
-        const response = user.logout();
+        const token = localStorage.getItem("access_token");
+        const response = user.logout(token);
         this.snackbar = true;
         this.msg = response.msg;
         this.$router.push("/login");

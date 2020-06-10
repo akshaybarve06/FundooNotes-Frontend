@@ -45,8 +45,7 @@ const routes = [
     path: '/createnote',
     name: 'CreateNote',
     component: CreateNote
-  },
-
+  }
 ]
 
 const router = new VueRouter({

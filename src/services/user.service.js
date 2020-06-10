@@ -45,9 +45,9 @@ export default {
             this.errors.push(e);
           });
     },
-    logout(){
+    logout(token){
       return axios
-          .post(url + 'logout/')
+          .post(url + `logout?access_token=${token}`)
           .then(response => response.data)
           .catch(e => {
             this.errors.push(e);

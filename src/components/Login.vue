@@ -15,31 +15,35 @@
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
             <v-card class="elevation-12">
-                <v-toolbar color="cyan" dark flat>
-                  <v-toolbar-title>Fundoo Login</v-toolbar-title>
-                  </v-toolbar>
-                  <v-card-text>
-                    <v-text-field
-                      type="email"
-                      v-model="input.email"
-                      name="email"
-                      label="Enter Email"
-                      :rules="['Required']"
-                      autocomplete="off"
-                    ></v-text-field>
-                    <v-text-field
-                      type="password"
-                      v-model="input.password"
-                      name="password"
-                      label="Enter Password"
-                      :rules="['Required']"
-                    ></v-text-field>
-                  </v-card-text>
-                  <v-card-actions>
-                    <a class="ma-2 pa-2 " href="/forgetpassword">Forgot Password ?</a>
-                    <v-spacer></v-spacer>
-                    <v-btn class="cyan ma-3 pa-2" dark v-on:click="userData()">Login</v-btn>
-                  </v-card-actions>
+              <v-toolbar color="cyan" dark flat>
+                <v-toolbar-title>Fundoo Login</v-toolbar-title>
+              </v-toolbar>
+              <v-card-text>
+                <v-text-field
+                  type="email"
+                  v-model="input.email"
+                  name="email"
+                  label="Enter Email"
+                  :rules="['Required']"
+                  autocomplete="off"
+                ></v-text-field>
+                <v-text-field
+                  type="password"
+                  v-model="input.password"
+                  name="password"
+                  label="Enter Password"
+                  :rules="['Required']"
+                ></v-text-field>
+              </v-card-text>
+              <v-card-actions>
+                <a class="ma-2 pa-2" href="/forgetpassword">Forgot Password ?</a>
+                <v-spacer></v-spacer>
+                <v-btn class="cyan ma-3 pa-2" dark v-on:click="userData()">Login</v-btn>
+              </v-card-actions>
+              <v-snackbar v-model="input.snackbar">
+                {{input.snackbarText}}
+                <v-btn text @click="input.snackbar = false">ok</v-btn>
+              </v-snackbar>
             </v-card>
           </v-col>
         </v-row>
@@ -59,7 +63,9 @@ export default {
     return {
       input: {
         email: "",
-        password: ""
+        password: "",
+        snackbar: false,
+        snackbarText: ""
       },
       response: ""
     };
@@ -73,8 +79,8 @@ export default {
         };
         const response = await user.login(userDetails);
         localStorage.setItem("access_token", response.id);
-        alert("Login Successful..");
-        this.msg = response.msg;
+        this.input.snackbar = true;
+        this.input.snackbarText = response.msg;
         this.$router.push("/dashboard");
       } catch (error) {
         console.log(error);
@@ -83,6 +89,4 @@ export default {
   }
 };
 </script>
-<style lang="stylus" scoped>
-
-</style>
+<style lang="stylus" scoped></style>
