@@ -7,7 +7,16 @@ import ForgetPassword from '../components/ForgetPassword.vue'
 import ResetPassword from '../components/ResetPassword.vue'
 import Dashboard from '../components/Dashboard.vue'
 import CreateNote from '../components/CreateNote.vue'
+import AllNotes from '../components/AllNotes.vue'
+import { MdButton, MdContent, MdTabs } from 'vue-material/dist/components'
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
+import VueMaterial from 'vue-material'
 
+Vue.use(VueMaterial)
+Vue.use(MdButton)
+Vue.use(MdContent)
+Vue.use(MdTabs)
 Vue.use(VueRouter)
 
 const routes = [
@@ -45,6 +54,11 @@ const routes = [
     path: '/createnote',
     name: 'CreateNote',
     component: CreateNote
+  },
+  {
+    path: '/allnotes',
+    name: 'AllNotes',
+    component: AllNotes
   }
 ]
 

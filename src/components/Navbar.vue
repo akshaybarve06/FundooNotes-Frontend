@@ -9,82 +9,82 @@
 *
 -->
 <template>
-  <nav>
-    <v-toolbar height="70px" class="amber accent-3" flat>
-      <v-icon class="gray--text" @click="drawer= !drawer">mdi-reorder-horizontal</v-icon>
-      <span class="ma-5 pa-4 font-weight-light">FUNDOO NOTES</span>
-      <span></span>
-      <v-text-field
-        dense
-        class="ma-5 pa-7"
-        v-model="search"
-        placeholder="Search.."
-        prepend-icon="mdi-magnify"
-        hide-details
-      ></v-text-field>
-      
-      <v-icon class="ma-3 pa-4">mdi-cart</v-icon>
-      <v-icon class="ma-3 pa-4">mdi-view-agenda</v-icon>
-      <v-icon @click="logout()" class="ma-3 pa-4">mdi-logout</v-icon>
-    </v-toolbar>
-  <v-navigation-drawer v-model="drawer" fixed app
-        temporary
+  <div class="page-container">
+    <md-app>
+      <md-app-toolbar class="md-primary">
+        <md-button class="md-icon-button" @click="toggleMenu" v-if="!menuVisible">
+          <md-icon>menu</md-icon>
+        </md-button>
+        <span class="md-title" style="flex: 1">FUNDOO NOTES</span>
+        <md-icon>view_agenda</md-icon> 
+        <md-button class="md-primary">Create</md-button>
+        <md-button  @click="logout()">Logout</md-button>
+      </md-app-toolbar>
+
+      <md-app-drawer temporary
         hide-overlay = "true"
         class="grey lighten-4"
         disable-resize-watcher
-        >
-      <!-- <v-list-item>
-        <v-list-item-content>
-        </v-list-item-content>
-      </v-list-item>
-      <v-divider></v-divider>-->
+        :md-active.sync="menuVisible" md-persistent="full">
+        <md-toolbar class="md-transparent" md-elevation="2">
+          <span>Navigation</span>
 
-      <v-list dense nav>
-        <v-list-item v-on:click="createNote()">
-          <v-icon>mdi-lightbulb</v-icon>
-          <v-list-item-title class="mdi-24px ma-4">Note</v-list-item-title>
-        </v-list-item>
-        <v-list-item link>
-          <v-icon>mdi-calendar-clock</v-icon>
-          <v-list-item-title class="mdi-24px ma-4">Reminder</v-list-item-title>
-        </v-list-item>
-        <v-divider></v-divider>
+          <div class="md-toolbar-section-end">
+            <md-button class="md-icon-button md-dense" @click="toggleMenu">
+              <md-icon>close</md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
+        <br>
+        <md-list>
+          <md-list-item @click="createNote()">
+            <md-icon >lightbulb_outline</md-icon>
+            <span class="md-list-item-text">Note</span>
+          </md-list-item>
 
-        <v-list-item-subtitle>Lables</v-list-item-subtitle>
-        <v-list-item>
-          <v-icon>mdi-plus</v-icon>
-          <v-list-item-title class="mdi-24px ma-5">Create New Lable</v-list-item-title>
-        </v-list-item>
-        <v-divider></v-divider>
+          <md-list-item>
+            <md-icon class="material-icons">add_alert</md-icon>
+            <span class="md-list-item-text">Reminder</span>
+          </md-list-item>
+          <br />
 
-        <v-list-item link>
-          <v-icon>mdi-package-down</v-icon>
-          <v-list-item-title class="mdi-24px ma-4">Archives</v-list-item-title>
-        </v-list-item>
-        <v-list-item link>
-          <v-icon>mdi-delete</v-icon>
-          <v-list-item-title class="mdi-24px ma-4">Trash</v-list-item-title>
-        </v-list-item>
-        <v-divider></v-divider>
+          <md-divider></md-divider>
+          <br />
+          <md-list-item-subtitle>Lables</md-list-item-subtitle>
+          <md-list-item>
+            <md-icon class="material-icons">add</md-icon>
+            <span class="md-list-item-text">Create New Lable</span>
+          </md-list-item>
+          <br />
+          <md-divider></md-divider>
+          <br>
+          <md-list-item>
+            <md-icon class="material-icons">archive</md-icon>
+            <span class="md-list-item-text">Archive</span>
+          </md-list-item>
 
-        <v-list-item link>
-          <v-icon>mdi-help-box</v-icon>
-          <v-list-item-title class="mdi-24px ma-4">Help</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-  </nav>
+          <md-list-item>
+            <md-icon class="material-icons">delete</md-icon>
+            <span class="md-list-item-text">Trash</span>
+          </md-list-item>
+        </md-list>
+      </md-app-drawer>
+    </md-app>
+  </div>
 </template>
 
 <script>
 import user from '../services/user.service'
+
 export default {
-  data() {
-    return {
-      drawer: false
-    };
-  },
+  name: "PersistentFull",
+  data: () => ({
+    menuVisible: false
+  }),
   methods: {
+    toggleMenu() {
+      this.menuVisible = !this.menuVisible;
+    },
     createNote() {
       this.$router.push("/createnote");
     },
@@ -102,3 +102,12 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.md-app {
+  min-height: 500px;
+}
+.md-drawer {
+  width: 270px;
+}
+</style>

@@ -15,18 +15,20 @@
     <v-layout justify-center row fill-height pt-4>
       <v-flex lg5 xs12 mb7 sm8>
         <v-form>
-        <v-text-field
-          class="ma-2 pa-2"
-          placeholder="Take A Note"
-          v-model="input.title"
-          solo
-          name="title"
-        >
-          <template slot="append">
-            <v-icon flat @click="popup()" class="ma-2">mdi-view-list</v-icon>
-            <v-icon class="ma-2">mdi-image</v-icon>
-          </template>
-        </v-text-field>
+          <v-text-field
+            class="ma-2 pa-2"
+            placeholder="Take A Note"
+            v-model="input.title"
+            solo
+            name="title"
+            @click="popup()"
+            autocomplete="off"
+          >
+            <template slot="append">
+              <v-icon flat @click="popup()" class="ma-2">mdi-view-list</v-icon>
+              <v-icon class="ma-2">mdi-image</v-icon>
+            </template>
+          </v-text-field>
           <div id="showNote" style="display:none;">
             <v-card-title>
               <v-textarea
@@ -78,18 +80,19 @@ export default {
         };
         const token = localStorage.getItem("access_token");
         await notes.addNote(noteDetails, token);
+        this.$router.push("/allnotes");
       } catch (error) {
         console.log(error);
       }
     },
-    popup(){
+    popup() {
       var x = document.getElementById("showNote");
       if (x.style.display === "block") {
         x.style.display = "none";
       } else if (x.style.display === "none") {
         x.style.display = "block";
       }
-}
+    }
   }
 };
 </script>
