@@ -9,23 +9,35 @@
 *
 -->
 <template>
-  <div class="page-container">
+<nav>
+  <div >
     <md-app>
-      <md-app-toolbar class="md-primary">
+      <md-app-toolbar>
         <md-button class="md-icon-button" @click="toggleMenu" v-if="!menuVisible">
           <md-icon>menu</md-icon>
         </md-button>
         <span class="md-title" style="flex: 1">FUNDOO NOTES</span>
-        <md-icon>view_agenda</md-icon> 
-        <md-button class="md-primary">Create</md-button>
-        <md-button  @click="logout()">Logout</md-button>
+        <v-text-field
+          dense
+          v-model="search"
+          placeholder="Search.."
+          prepend-icon="search"
+          hide-details
+        ></v-text-field>
+        <md-icon style="margin: 20px">shopping_cart</md-icon>
+        <md-icon style="margin: 20px">view_agenda</md-icon>
+        <md-button  style="margin: 14px" @click="logout()">Logout</md-button>
       </md-app-toolbar>
 
-      <md-app-drawer temporary
-        hide-overlay = "true"
+      <md-app-drawer
+        fixed
+        app
+        clicked
+        hide-overlay="true"
         class="grey lighten-4"
-        disable-resize-watcher
-        :md-active.sync="menuVisible" md-persistent="full">
+        :md-active.sync="menuVisible"
+        md-persistent="full"
+      >
         <md-toolbar class="md-transparent" md-elevation="2">
           <span>Navigation</span>
 
@@ -35,10 +47,10 @@
             </md-button>
           </div>
         </md-toolbar>
-        <br>
+        <br />
         <md-list>
           <md-list-item @click="createNote()">
-            <md-icon >lightbulb_outline</md-icon>
+            <md-icon>lightbulb_outline</md-icon>
             <span class="md-list-item-text">Note</span>
           </md-list-item>
 
@@ -57,7 +69,7 @@
           </md-list-item>
           <br />
           <md-divider></md-divider>
-          <br>
+          <br />
           <md-list-item>
             <md-icon class="material-icons">archive</md-icon>
             <span class="md-list-item-text">Archive</span>
@@ -67,14 +79,22 @@
             <md-icon class="material-icons">delete</md-icon>
             <span class="md-list-item-text">Trash</span>
           </md-list-item>
+          <md-list-item>
+            <md-icon class="material-icons">help_outline</md-icon>
+            <span class="md-list-item-text">Help</span>
+          </md-list-item>
         </md-list>
       </md-app-drawer>
+      <md-app-content>
+        
+      </md-app-content>
     </md-app>
   </div>
+  </nav>
 </template>
 
 <script>
-import user from '../services/user.service'
+import user from "../services/user.service";
 
 export default {
   name: "PersistentFull",
@@ -88,7 +108,7 @@ export default {
     createNote() {
       this.$router.push("/createnote");
     },
-    logout(){
+    logout() {
       try {
         const token = localStorage.getItem("access_token");
         const response = user.logout(token);

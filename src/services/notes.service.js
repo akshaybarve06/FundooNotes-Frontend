@@ -11,15 +11,17 @@
 
 import axios from "axios";
 
-const url='http://fundoonotes.incubation.bridgelabz.com/api/notes/'
+const url = 'http://fundoonotes.incubation.bridgelabz.com/api/notes/'
 
 export default {
-    addNote(noteDetails,token) {
-      return axios
+  addNote(noteDetails, token) {
+    return axios
       .post(url + `addNotes?access_token=${token}`, noteDetails)
       .then(response => response.data)
-      .catch(e => {
-        console.log(e)
-      });
-    }
+  },
+  getNotes(token) {
+    return axios
+      .get(url + `/getNotesList?access_token=${token}`)
+      .then(response => response.data)
+  }
 }

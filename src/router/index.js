@@ -12,7 +12,10 @@ import { MdButton, MdContent, MdTabs } from 'vue-material/dist/components'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import VueMaterial from 'vue-material'
-
+import { Datetime } from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
+ 
+Vue.use(Datetime)
 Vue.use(VueMaterial)
 Vue.use(MdButton)
 Vue.use(MdContent)
