@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import user from "../services/user.service";
+import user from "../../services/user.service";
 export default {
   name: "Register",
   props: {
@@ -96,6 +96,7 @@ export default {
           password: this.input.password
         };
         const response = await user.signUp(newUser);
+        alert("User Registered Successfully...")
         this.msg = response.msg;
       } catch (error) {
         console.log(error);

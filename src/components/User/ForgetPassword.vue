@@ -30,32 +30,24 @@
                 dark
                 flat
               >
-                <v-toolbar-title>Enter New Password</v-toolbar-title>
+                <v-toolbar-title>Forget Password</v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
               <v-text-field
-                type="password"
-                v-model="input.newPassword"
-                name="newPassword"
-                label="New Password"
-                :rules="['Required']"
-                autocomplete="off"
-              ></v-text-field>
-              <v-text-field
-                type="password"
-                v-model="input.confirmPaswword"
-                name="confirmPassword"
-                label="Confirm Password"
+                type="email"
+                v-model="input.email"
+                name="email"
+                label="Enter Email"
                 :rules="['Required']"
                 autocomplete="off"
               ></v-text-field>
             </v-card-text>
               <v-card-actions>
-                  <a class="ma-2 pa-2 " href="/login">Back To Login</a>
-                  <v-spacer></v-spacer>
-                  <v-btn round class="cyan ma-3 pa-2" dark v-on:click="resetPassword()">Reset</v-btn>
-            </v-card-actions>
+                <a class="ma-2 pa-2 " href="/login">Back To Login</a>
+                <v-spacer></v-spacer>
+                <v-btn class="cyan ma-3 pa-2" dark v-on:click="forgetPassword()">Send Reset Link</v-btn>
+              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
@@ -65,32 +57,30 @@
 </template>
 
 <script>
-import user from "../services/user.service";
+import user from "../../services/user.service";
 export default {
-  name: "ResetPassword",
+  name: "ForgetPassword",
   props: {
     msg: String
   },
   data() {
     return {
       input: {
-        newPassword: "",
-        confirmPassword:""
+        email: ""
       },
       response: ""
     };
   },
   methods: {
-    async resetPassword() {
+    async forgetPassword() {
+      8
       try {
         const userDetails = {
-          newPassword: this.input.newPassword
+          email: this.input.email
         };
-        const token=this.$route.params.token
-        console.log("token..."+token)
-        const response = await user.reset(userDetails,token);
-        alert("Password Reset Successfully")
-        this.$router.push('/login') 
+        const response = await user.forget(userDetails);
+        //this.$router.push('/resetpassword')
+        alert("Reset Link Sent On Email Id...")
         this.msg = response.msg;
       } catch (error) {
         console.log(error);

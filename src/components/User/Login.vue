@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import user from "../services/user.service";
+import user from "../../services/user.service";
 export default {
   name: "Login",
   props: {
@@ -79,6 +79,7 @@ export default {
         };
         const response = await user.login(userDetails);
         localStorage.setItem("access_token", response.id);
+        alert("Login Successful...")
         this.input.snackbar = true;
         this.input.snackbarText = response.msg;
         this.$router.push("/dashboard");
