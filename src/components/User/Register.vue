@@ -78,7 +78,7 @@ export default {
       input: {
         firstName: "",
         lastName: "",
-        service: "advanced",
+        service: "advance",
         email: "",
         password: ""
       },
@@ -91,7 +91,7 @@ export default {
         const newUser = {
           firstName: this.input.firstName,
           lastName: this.input.lastName,
-          service: "advanced",
+          service: "advance",
           email: this.input.email,
           password: this.input.password
         };

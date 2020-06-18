@@ -23,5 +23,10 @@ export default {
     return axios
       .get(url + `/getNotesList?access_token=${token}`)
       .then(response => response.data)
+  },
+  deleteNoteForever(noteDetails, token) {
+    return axios
+      .post(url + `/deleteForeverNotes?access_token=${token}`,noteDetails)
+      .then(response => response.data)
   }
 }

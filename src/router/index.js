@@ -13,6 +13,7 @@ import 'vue-material/dist/theme/default.css'
 import VueMaterial from 'vue-material'
 import { Datetime } from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
+import AllNotes from '../components/Notes/AllNotes.vue'
 
 Vue.use(Datetime)
 Vue.use(VueMaterial)
@@ -57,8 +58,12 @@ const routes = [
     name: 'CreateNote',
     component: CreateNote
   },
+  {
+    path: '/allnotes',
+    name: 'AllNotes',
+    component: AllNotes
+  },
 ]
-
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,

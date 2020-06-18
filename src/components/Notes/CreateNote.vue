@@ -30,7 +30,6 @@
             <md-icon>portrait</md-icon>
           </md-button>
         </md-app-toolbar>
-
         <md-app-drawer :md-active.sync="menuVisible" md-permanent="clipped" md-persistent="mini">
           <br />
           <md-list>
@@ -38,13 +37,11 @@
               <md-icon>lightbulb_outline</md-icon>
               <span class="md-list-item-text">Note</span>
             </md-list-item>
-
             <md-list-item>
               <md-icon class="material-icons">add_alert</md-icon>
               <span class="md-list-item-text">Reminder</span>
             </md-list-item>
             <br />
-
             <md-divider></md-divider>
             <br />
             <md-list-item>
@@ -70,7 +67,7 @@
           </md-list>
         </md-app-drawer>
         <md-app-content>
-          <div>
+          <div style="margin-bottom: 15px">
             <v-card class="md-layout-item1" v-show="isdisplay" @click="openCard()">
               <v-text-field flat placeholder="Take A Note " solo></v-text-field>
             </v-card>
@@ -89,94 +86,100 @@
                 <v-btn @click="reminder()" text>
                   <md-icon class="material-icons">notifications_active</md-icon>
                 </v-btn>
-                <v-btn @click="reminder()" text>
+                <v-btn text>
                   <md-icon class="material-icons">person_add</md-icon>
                 </v-btn>
-                <v-btn @click="reminder()" text>
+                <v-btn text>
                   <md-icon class="material-icons">palette</md-icon>
                 </v-btn>
-                <v-btn @click="reminder()" text>
+                <v-btn text>
                   <md-icon class="material-icons">panorama</md-icon>
                 </v-btn>
-                <v-btn @click="reminder()" text>
+                <v-btn text>
                   <md-icon class="material-icons">archive</md-icon>
                 </v-btn>
-                <v-btn @click="reminder()" text>
+                <v-btn text>
                   <md-icon class="material-icons">more_vert</md-icon>
                 </v-btn>
                 <v-spacer></v-spacer>
                 <v-btn text @click="closeCard()">close</v-btn>
               </v-card-actions>
-              <div width="100px" id="showReminder" style="display:none;">
-                <div class="md-layout md-gutter">
-                  <div class="md-lable">
-                    <md-card width="100px">
-                      <md-field>
-                        <label style="margin-left: 10px">Set Reminder</label>
-                        <md-select v-model="input.reminder">
-                          <md-option value="xx/xx/xxxx">Later Today - 08.00 PM</md-option>
-                          <md-option value="xx/xx/xxxx">Tomorrow - 08.00 AM</md-option>
-                          <md-option value="xx/xx/xxxx">Next Week - MON 08.00 AM</md-option>
-                          <md-datepicker>
-                            <label>Select Custom Date</label>
-                          </md-datepicker>
-                        </md-select>
-                      </md-field>
-                    </md-card>
-                  </div>
-                </div>
-              </div>
             </v-card>
           </div>
-          <div style="margin-top: 15px">
-            <v-content>
-              <v-card
-                style="margin: 14px"
-                class="d-inline-flex"
-                v-for="items in allNotes"
-                :key="items.id"
-              >
-                <v-layout >
-                  <v-flex xs8 class="pr-3">
-                    <v-card-title>{{items.title}}</v-card-title>
-                    <v-card-text>{{items.description}}</v-card-text>
-                    <v-card-actions>
-                      <v-btn @click="reminder()" text>
-                        <md-icon class="material-icons">notifications_active</md-icon>
-                      </v-btn>
-                      <v-btn text>
-                        <md-icon class="material-icons">person_add</md-icon>
-                      </v-btn>
-                      <v-btn text>
-                        <md-icon class="material-icons">palette</md-icon>
-                      </v-btn>
-                      <v-btn text>
-                        <md-icon class="material-icons">panorama</md-icon>
-                      </v-btn>
-                      <v-btn text>
-                        <md-icon class="material-icons">archive</md-icon>
-                      </v-btn>
-                      <v-btn text>
-                        <md-icon class="material-icons">more_vert</md-icon>
-                      </v-btn>
-                      <v-spacer></v-spacer>
-                      <v-btn text @click="closeCard()">close</v-btn>
-                    </v-card-actions>
-                  </v-flex>
-                </v-layout>
-              </v-card>
-            </v-content>
-          </div>
+
+          <v-content>
+            <v-card
+              style="margin: 7px"
+              class="d-inline-flex"
+              v-for="items in allNotes"
+              :key="items.id"
+            >
+              <v-layout>
+                <v-flex xs8 class="pr-3">
+                  <v-card-title>{{items.title}}</v-card-title>
+                  <v-card-text>{{items.description}}</v-card-text>
+                  <v-card-actions>
+                    <v-btn icon>
+                      <md-icon class="material-icons">notifications_active</md-icon>
+                    </v-btn>
+                    <v-btn icon>
+                      <md-icon class="material-icons">person_add</md-icon>
+                    </v-btn>
+                    <v-btn icon>
+                      <md-icon class="material-icons">palette</md-icon>
+                    </v-btn>
+                    <v-btn icon>
+                      <md-icon class="material-icons">panorama</md-icon>
+                    </v-btn>
+                    <v-btn icon>
+                      <md-icon class="material-icons">archive</md-icon>
+                    </v-btn>
+                    <v-btn @click="reminder()" icon>
+                      <md-icon class="material-icons">more_vert</md-icon>
+                    </v-btn>
+                  </v-card-actions>
+                  <div width="200px" id="show" style="display:none;">
+                     <div class="md-layout md-gutter">
+                  <div class="md-lable2">
+                      <md-card width="200px" height="500px">
+                        <md-field>
+                          <md-btn text @click="deleteNote(items.id)">Delete Note</md-btn>
+                        </md-field>
+                      </md-card>
+                  </div>
+                     </div>
+                  </div>
+                  <div width="100px" id="show" style="display:none;">
+                    <div class="md-layout md-gutter">
+                      <div class="md-lable">
+                        <md-card width="100px">
+                          <md-field>
+                            <label>Set Reminder</label>
+                            <md-select v-model="input.reminder">
+                              <md-option value="xx/xx/xxxx">Later Today - 08.00 PM</md-option>
+                              <md-option value="xx/xx/xxxx">Tomorrow - 08.00 AM</md-option>
+                              <md-option value="xx/xx/xxxx">Next Week - MON 08.00 AM</md-option>
+                              <md-datepicker>
+                                <label>Select Custom Date</label>
+                              </md-datepicker>
+                            </md-select>
+                          </md-field>
+                        </md-card>
+                      </div>
+                    </div>
+                  </div>
+                </v-flex>
+              </v-layout>
+            </v-card>
+          </v-content>
         </md-app-content>
       </md-app>
     </div>
   </nav>
 </template>
-
 <script>
 import user from "../../services/user.service";
 import notes from "../../services/notes.service";
-
 export default {
   data() {
     return {
@@ -238,7 +241,7 @@ export default {
       }
     },
     reminder() {
-      var x = document.getElementById("showReminder");
+      var x = document.getElementById("show");
       if (x.style.display === "block") {
         x.style.display = "none";
       } else if (x.style.display === "none") {
@@ -249,9 +252,21 @@ export default {
       try {
         const token = localStorage.getItem("access_token");
         const response = await notes.getNotes(token);
-        //console.log("Respnse from Get All Notes >>>>" + response);
         this.allNotes = response.data.data;
         console.log("All Notes...." + this.allNotes);
+      } catch (error) {
+        console.log("error" + error);
+      }
+    },
+    async deleteNote(key){
+      try {
+        const noteDetails={
+          noteIdList:[key],
+          isArchived:false
+        }
+        const token = localStorage.getItem("access_token");
+        const response = await notes.deleteNoteForever(noteDetails, token);
+        alert("response"+response)
       } catch (error) {
         console.log("error" + error);
       }
@@ -282,6 +297,10 @@ export default {
 .md-lable {
   width: 300px;
   margin-left: 30px;
+}
+.md-lable2 {
+  width: 200px;
+  margin-left: 200px;
 }
 .md-layout-item1 {
   width: 540px;
