@@ -11,6 +11,10 @@
 <template>
   <v-app id="inspire">
     <v-content>
+      <v-snackbar color="primary" v-model="input.snackbar" timeout="4000">
+        <span>{{input.snackbarText}}</span>
+        <v-btn flat text @click="goto()" color="white">OK</v-btn>
+        </v-snackbar>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
@@ -40,10 +44,6 @@
                 <v-spacer></v-spacer>
                 <v-btn class="cyan ma-3 pa-2" dark v-on:click="userData()">Login</v-btn>
               </v-card-actions>
-              <v-snackbar v-model="input.snackbar">
-                {{input.snackbarText}}
-                <v-btn text @click="input.snackbar = false">ok</v-btn>
-              </v-snackbar>
             </v-card>
           </v-col>
         </v-row>
@@ -79,13 +79,14 @@ export default {
         };
         const response = await user.login(userDetails);
         localStorage.setItem("access_token", response.id);
-        alert("Login Successful...")
         this.input.snackbar = true;
-        this.input.snackbarText = response.msg;
-        this.$router.push("/dashboard");
+        this.input.snackbarText = "Login SuccessFull "
       } catch (error) {
         console.log(error);
       }
+    },
+    goto(){
+      this.$router.push("/dashboard");
     }
   }
 };

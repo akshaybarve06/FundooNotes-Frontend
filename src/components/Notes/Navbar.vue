@@ -8,17 +8,6 @@
 * @since: 04/06/2020- Thursday
 *
 -->
-<!--
-* @Description :
-*
-* @file: CreateNote.vue
-* @overview: CreateNote.vue is component for creating new Note
-* @author: Akshay Dhananjay Barve
-* @version: 20.04
-* @since: 07/06/2020- Sunday
-*
--->
--->
 <template>
   <nav>
     <div>
@@ -70,7 +59,7 @@
             <br />
             <md-divider></md-divider>
             <br />
-            <md-list-item>
+            <md-list-item @click="archiveNotes()">
               <md-icon class="material-icons">archive</md-icon>
               <span class="md-list-item-text">Archive</span>
             </md-list-item>
@@ -85,9 +74,7 @@
             </md-list-item>
           </md-list>
         </md-app-drawer>
-        <md-app-content>
-          
-        </md-app-content>
+       <router-view></router-view>
       </md-app>
     </div>
   </nav>
@@ -97,6 +84,7 @@
 import user from "../../services/user.service";
 
 export default {
+  name:"Navbar",
   data() {
     return {
       menuVisible: false,
@@ -121,7 +109,10 @@ export default {
     createNote() {
       this.$router.push("/createnote");
     },
-    logout() {
+    archiveNotes(){
+      this.$router.push("/archivenotes");
+    },
+        logout() {
       try {
         const token = localStorage.getItem("access_token");
         const response = user.logout(token);
@@ -135,14 +126,7 @@ export default {
   }
 };
 </script>
-
 <style lang="scss" scoped>
-.md-app {
-  min-height: 600px;
-}
-.md-drawer {
-  width: 270px;
-}
-
+@import "../../Style/Style.scss"
 </style>
 

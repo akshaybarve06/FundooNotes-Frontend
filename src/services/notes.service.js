@@ -18,15 +18,32 @@ export default {
     return axios
       .post(url + `addNotes?access_token=${token}`, noteDetails)
       .then(response => response.data)
+      .catch(e => {
+        this.errors.push(e);
+      });
   },
   getNotes(token) {
     return axios
       .get(url + `/getNotesList?access_token=${token}`)
       .then(response => response.data)
+      .catch(e => {
+        this.errors.push(e);
+      });
   },
   deleteNoteForever(noteDetails, token) {
     return axios
       .post(url + `/deleteForeverNotes?access_token=${token}`,noteDetails)
       .then(response => response.data)
+      .catch(e => {
+        this.errors.push(e);
+      });
+  },
+  getArchiveNotesList(token) {
+    return axios
+      .get(url + `/getArchiveNotesList?access_token=${token}`)
+      .then(response => response.data)
+      .catch(e => {
+        this.errors.push(e);
+      });
   }
 }

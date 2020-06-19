@@ -5,7 +5,7 @@ import Login from '../components/User/Login.vue'
 import Register from '../components/User/Register.vue'
 import ForgetPassword from '../components/User/ForgetPassword.vue'
 import ResetPassword from '../components/User/ResetPassword.vue'
-import Dashboard from '../components/Notes/Dashboard.vue'
+import Navbar from '../components/Notes/Navbar.vue'
 import CreateNote from '../components/Notes/CreateNote.vue'
 import { MdButton, MdContent, MdTabs } from 'vue-material/dist/components'
 import 'vue-material/dist/vue-material.min.css'
@@ -13,7 +13,7 @@ import 'vue-material/dist/theme/default.css'
 import VueMaterial from 'vue-material'
 import { Datetime } from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
-import AllNotes from '../components/Notes/AllNotes.vue'
+import ArchiveNotes from '../components/Notes/ArchiveNotes.vue'
 
 Vue.use(Datetime)
 Vue.use(VueMaterial)
@@ -24,14 +24,14 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home
   },
   {
     path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard
+    name: 'Navbar',
+    component: Navbar,
   },
   {
     path: '/login',
@@ -59,9 +59,9 @@ const routes = [
     component: CreateNote
   },
   {
-    path: '/allnotes',
-    name: 'AllNotes',
-    component: AllNotes
+    path: '/archivenotes',
+    name: 'ArchiveNotes',
+    component: ArchiveNotes
   },
 ]
 const router = new VueRouter({

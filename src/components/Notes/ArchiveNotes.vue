@@ -1,6 +1,15 @@
 <!--
 * @Description :
 *
+* @file: ArchiveNotes.vue
+* @overview: ArchiveNotes.vue is component for creating new Note
+* @author: Akshay Dhananjay Barve
+* @version: 20.04
+* @since: 16/06/2020- Tuesday
+*
+--><!--
+* @Description :
+*
 * @file: CreateNote.vue
 * @overview: CreateNote.vue is component for creating new Note
 * @author: Akshay Dhananjay Barve
@@ -10,10 +19,6 @@
 -->
 <template>
   <nav>
-    <v-snackbar color="primary" v-model="input.snackbar" timeout="4000">
-      <span>{{input.snackbarText}}</span>
-      <v-btn flat text @click="goto()" color="white">OK</v-btn>
-    </v-snackbar>
     <div>
       <md-app>
         <md-app-toolbar fixed app class="amber">
@@ -55,7 +60,7 @@
             <br />
             <md-divider></md-divider>
             <br />
-            <md-list-item @click="getArchiveNotes()">
+            <md-list-item >
               <md-icon class="material-icons">archive</md-icon>
               <span class="md-list-item-text">Archive</span>
             </md-list-item>
@@ -70,47 +75,6 @@
             </md-list-item>
           </md-list>
         </md-app-drawer>
-        <md-app-content>
-          <div style="margin-bottom: 15px">
-            <v-card class="md-layout-item1" v-show="isdisplay" @click="openCard()">
-              <v-text-field flat placeholder="Take A Note " solo></v-text-field>
-            </v-card>
-            <v-card class="md-layout-item2" v-show="!isdisplay">
-              <v-text-field flat solo rows="1" v-model="input.title" row-height="10" label="Title"></v-text-field>
-              <v-textarea
-                flat
-                solo
-                rows="1"
-                v-model="input.description"
-                row-height="10"
-                label="Take A Note"
-                auto-grow
-              ></v-textarea>
-              <v-card-actions>
-                <v-btn @click="reminder()" text>
-                  <md-icon class="material-icons">notifications_active</md-icon>
-                </v-btn>
-                <v-btn text>
-                  <md-icon class="material-icons">person_add</md-icon>
-                </v-btn>
-                <v-btn text>
-                  <md-icon class="material-icons">palette</md-icon>
-                </v-btn>
-                <v-btn text>
-                  <md-icon class="material-icons">panorama</md-icon>
-                </v-btn>
-                <v-btn text>
-                  <md-icon class="material-icons">archive</md-icon>
-                </v-btn>
-                <v-btn text>
-                  <md-icon class="material-icons">more_vert</md-icon>
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-btn text @click="closeCard()">close</v-btn>
-              </v-card-actions>
-            </v-card>
-          </div>
-
           <v-content>
             <v-card
               style="margin: 7px"
@@ -141,60 +105,17 @@
                     <v-btn @click="reminder()" icon>
                       <md-icon class="material-icons">more_vert</md-icon>
                     </v-btn>
-                    <v-dialog v-model="dialog" width="600">
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon v-bind="attrs" v-on="on">
-                          <md-icon class="material-icons">edit</md-icon>
-                        </v-btn>
-                      </template>
-
-                      <v-card>
-                        <v-card-title class="headline grey lighten-2" primary-title>Update Note</v-card-title>
-                        <v-text-field flat solo label="Title"></v-text-field>
-                        <v-textarea
-                          flat
-                          solo
-                          rows="1"
-                          v-bind:title="items.title"
-                          placeholder="${title}"
-                          auto-grow
-                        ></v-textarea>
-                        <v-card-actions>
-                          <v-btn @click="reminder()" text>
-                            <md-icon class="material-icons">notifications_active</md-icon>
-                          </v-btn>
-                          <v-btn text>
-                            <md-icon class="material-icons">person_add</md-icon>
-                          </v-btn>
-                          <v-btn text>
-                            <md-icon class="material-icons">palette</md-icon>
-                          </v-btn>
-                          <v-btn text>
-                            <md-icon class="material-icons">panorama</md-icon>
-                          </v-btn>
-                          <v-btn text>
-                            <md-icon class="material-icons">archive</md-icon>
-                          </v-btn>
-                          <v-btn text>
-                            <md-icon class="material-icons">more_vert</md-icon>
-                          </v-btn>
-                          <v-spacer></v-spacer>
-                          <v-btn text @click="updateCard()">close</v-btn>
-                          <v-spacer></v-spacer>
-                        </v-card-actions>
-                      </v-card>
-                    </v-dialog>
                   </v-card-actions>
                   <div width="200px" id="show" style="display:none;">
-                    <div class="md-layout md-gutter">
-                      <div class="md-lable2">
-                        <md-card width="200px" height="500px">
-                          <md-field>
-                            <md-btn text @click="deleteNote(items.id)">Delete Note</md-btn>
-                          </md-field>
-                        </md-card>
-                      </div>
-                    </div>
+                     <div class="md-layout md-gutter">
+                  <div class="md-lable2">
+                      <md-card width="200px" height="500px">
+                        <md-field>
+                          <md-btn text @click="deleteNote(items.id)">Delete Note</md-btn>
+                        </md-field>
+                      </md-card>
+                  </div>
+                     </div>
                   </div>
                   <div width="100px" id="show" style="display:none;">
                     <div class="md-layout md-gutter">
@@ -219,7 +140,6 @@
               </v-layout>
             </v-card>
           </v-content>
-        </md-app-content>
       </md-app>
     </div>
   </nav>
@@ -228,6 +148,7 @@
 import user from "../../services/user.service";
 import notes from "../../services/notes.service";
 export default {
+  name:"CreateNote",
   data() {
     return {
       menuVisible: false,
@@ -241,9 +162,7 @@ export default {
         isPinned: "",
         isArchived: "",
         color: "",
-        reminder: "",
-        snackbar: false,
-        snackbarText: ""
+        reminder: ""
       },
       response: ""
     };
@@ -255,31 +174,14 @@ export default {
     createNote() {
       this.$router.push("/createnote");
     },
-    openCard() {
-      this.isdisplay = false;
-    },
-    closeCard() {
-      if (this.input.title != " " && this.input.description != " ") {
-        try {
-          const noteDetails = {
-            title: this.input.title,
-            description: this.input.description,
-            reminder: this.input.reminder
-          };
-          const token = localStorage.getItem("access_token");
-          notes.addNote(noteDetails, token);
-          location.reload();
-        } catch (error) {
-          console.log(error);
-        }
-      } else this.isdisplay = true;
-    },
     logout() {
       try {
         const token = localStorage.getItem("access_token");
-        user.logout(token);
-        this.input.snackbar = true;
-        this.input.snackbarText = "User Logged Out SuccessFully ";
+        const response = user.logout(token);
+        alert("Logout Successful...");
+        this.snackbar = true;
+        this.msg = response.msg;
+        this.$router.push("/login");
       } catch (error) {
         console.log(error);
       }
@@ -292,34 +194,27 @@ export default {
         x.style.display = "block";
       }
     },
-    async getAllNotes() {
+    async getArchiveNotes() {
       try {
         const token = localStorage.getItem("access_token");
-        const response = await notes.getNotes(token);
+        const response = await notes.getArchiveNotesList(token);
         this.allNotes = response.data.data;
-        console.log("All Notes...." + this.allNotes);
       } catch (error) {
         console.log("error" + error);
       }
     },
-    async getArchiveNotes(){
-      this.$router.push("/archivenotes");
-    },
-    async deleteNote(key) {
+    async deleteNote(key){
       try {
-        const noteDetails = {
-          noteIdList: [key],
-          isArchived: false
-        };
+        const noteDetails={
+          noteIdList:[key],
+          isArchived:false
+        }
         const token = localStorage.getItem("access_token");
         const response = await notes.deleteNoteForever(noteDetails, token);
-        alert("response" + response);
+        alert("response"+response)
       } catch (error) {
         console.log("error" + error);
       }
-    },
-    goto() {
-      this.$router.push("/login");
     }
   },
   mounted() {
@@ -327,6 +222,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-@import "../../Style/Style.scss";
+
+<style >
+@import "../../Style/Style.scss"
 </style>

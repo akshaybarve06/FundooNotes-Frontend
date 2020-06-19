@@ -11,6 +11,10 @@
 <template>
   <v-app id="inspire">
     <v-content>
+      <v-snackbar color="primary" v-model="input.snackbar" timeout="4000">
+        <span>{{input.snackbarText}}</span>
+        <v-btn flat text @click="goto()" color="white">OK</v-btn>
+        </v-snackbar>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
@@ -80,7 +84,9 @@ export default {
         lastName: "",
         service: "advance",
         email: "",
-        password: ""
+        password: "",
+        snackbar: false,
+        snackbarText: ""
       },
       response: ""
     };
@@ -95,12 +101,15 @@ export default {
           email: this.input.email,
           password: this.input.password
         };
-        const response = await user.signUp(newUser);
-        alert("User Registered Successfully...")
-        this.msg = response.msg;
+        await user.signUp(newUser);
+        this.input.snackbar = true;
+        this.input.snackbarText = "User Registered SuccessFully"
       } catch (error) {
         console.log(error);
       }
+    },
+    goto(){
+      this.$router.push("/login");
     }
   }
 };

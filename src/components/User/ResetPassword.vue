@@ -75,7 +75,9 @@ export default {
     return {
       input: {
         newPassword: "",
-        confirmPassword:""
+        confirmPassword:"",
+        snackbar: false,
+        snackbarText: ""
       },
       response: ""
     };
@@ -87,14 +89,15 @@ export default {
           newPassword: this.input.newPassword
         };
         const token=this.$route.params.token
-        console.log("token..."+token)
-        const response = await user.reset(userDetails,token);
-        alert("Password Reset Successfully...")
-        this.$router.push('/login') 
-        this.msg = response.msg;
+        await user.reset(userDetails,token);
+        this.input.snackbar = true;
+        this.input.snackbarText = "Password Reset Successfully "
       } catch (error) {
         console.log(error);
       }
+    },
+    goto(){
+      this.$router.push("/login");
     }
   }
 };

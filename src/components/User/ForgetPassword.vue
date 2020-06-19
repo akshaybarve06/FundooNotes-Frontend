@@ -11,6 +11,10 @@
 <template>
   <v-app id="inspire">
     <v-content>
+      <v-snackbar color="primary" v-model="input.snackbar" timeout="4000">
+        <span>{{input.snackbarText}}</span>
+        <v-btn flat text @click="goto()" color="white">OK</v-btn>
+        </v-snackbar>
       <v-container
         class="fill-height"
         fluid
@@ -66,7 +70,9 @@ export default {
   data() {
     return {
       input: {
-        email: ""
+        email: "",
+        snackbar: false,
+        snackbarText: ""
       },
       response: ""
     };
@@ -78,13 +84,15 @@ export default {
         const userDetails = {
           email: this.input.email
         };
-        const response = await user.forget(userDetails);
-        //this.$router.push('/resetpassword')
-        alert("Reset Link Sent On Email Id...")
-        this.msg = response.msg;
+        await user.forget(userDetails);
+        this.input.snackbar = true;
+        this.input.snackbarText = "Reset Link Sent On Registerd Email "
       } catch (error) {
         console.log(error);
       }
+    },
+    goto(){
+      this.$router.push("/forgetpassword");
     }
   }
 };
