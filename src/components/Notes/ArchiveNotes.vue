@@ -2,19 +2,10 @@
 * @Description :
 *
 * @file: ArchiveNotes.vue
-* @overview: ArchiveNotes.vue is component for creating new Note
+* @overview: ArchiveNotes.vue is component for showing all archive notes
 * @author: Akshay Dhananjay Barve
 * @version: 20.04
 * @since: 16/06/2020- Tuesday
-*
---><!--
-* @Description :
-*
-* @file: CreateNote.vue
-* @overview: CreateNote.vue is component for creating new Note
-* @author: Akshay Dhananjay Barve
-* @version: 20.04
-* @since: 07/06/2020- Sunday
 *
 -->
 <template>
@@ -60,12 +51,12 @@
             <br />
             <md-divider></md-divider>
             <br />
-            <md-list-item >
+            <md-list-item @click="getArchiveNotes()">
               <md-icon class="material-icons">archive</md-icon>
               <span class="md-list-item-text">Archive</span>
             </md-list-item>
 
-            <md-list-item>
+            <md-list-item @click="goToTrashNotes()">
               <md-icon class="material-icons">delete</md-icon>
               <span class="md-list-item-text">Trash</span>
             </md-list-item>
@@ -75,6 +66,7 @@
             </md-list-item>
           </md-list>
         </md-app-drawer>
+        <md-app-content>
           <v-content>
             <v-card
               style="margin: 7px"
@@ -87,9 +79,28 @@
                   <v-card-title>{{items.title}}</v-card-title>
                   <v-card-text>{{items.description}}</v-card-text>
                   <v-card-actions>
-                    <v-btn icon>
-                      <md-icon class="material-icons">notifications_active</md-icon>
-                    </v-btn>
+                    <div class="text-center">
+                      <v-menu offset-x>
+                        <template v-slot:activator="{ on }">
+                          <v-btn icon v-on="on">
+                            <md-icon class="material-icons">notifications_active</md-icon>
+                          </v-btn>
+                        </template>
+                        <v-list>
+                          <md-field>
+                            <label margin="10%">Reminder</label>
+                            <md-select v-model="input.reminder">
+                              <md-datepicker>
+                                <label>Select Custom Date</label>
+                              </md-datepicker>
+                              <md-option value="xx/xx/xxxx">Later Today - 08.00 PM</md-option>
+                              <md-option value="xx/xx/xxxx">Tomorrow - 08.00 AM</md-option>
+                              <md-option value="xx/xx/xxxx">Next Week - MON 08.00 AM</md-option>
+                            </md-select>
+                          </md-field>
+                        </v-list>
+                      </v-menu>
+                    </div>
                     <v-btn icon>
                       <md-icon class="material-icons">person_add</md-icon>
                     </v-btn>
@@ -99,47 +110,28 @@
                     <v-btn icon>
                       <md-icon class="material-icons">panorama</md-icon>
                     </v-btn>
-                    <v-btn icon>
+                    <v-btn icon @click="unArchive(items.id)">
                       <md-icon class="material-icons">archive</md-icon>
                     </v-btn>
-                    <v-btn @click="reminder()" icon>
-                      <md-icon class="material-icons">more_vert</md-icon>
-                    </v-btn>
-                  </v-card-actions>
-                  <div width="200px" id="show" style="display:none;">
-                     <div class="md-layout md-gutter">
-                  <div class="md-lable2">
-                      <md-card width="200px" height="500px">
-                        <md-field>
-                          <md-btn text @click="deleteNote(items.id)">Delete Note</md-btn>
-                        </md-field>
-                      </md-card>
-                  </div>
-                     </div>
-                  </div>
-                  <div width="100px" id="show" style="display:none;">
-                    <div class="md-layout md-gutter">
-                      <div class="md-lable">
-                        <md-card width="100px">
-                          <md-field>
-                            <label>Set Reminder</label>
-                            <md-select v-model="input.reminder">
-                              <md-option value="xx/xx/xxxx">Later Today - 08.00 PM</md-option>
-                              <md-option value="xx/xx/xxxx">Tomorrow - 08.00 AM</md-option>
-                              <md-option value="xx/xx/xxxx">Next Week - MON 08.00 AM</md-option>
-                              <md-datepicker>
-                                <label>Select Custom Date</label>
-                              </md-datepicker>
-                            </md-select>
-                          </md-field>
-                        </md-card>
-                      </div>
+                    <v-spacer></v-spacer>
+                    <div class="text-center">
+                      <v-menu offset-x>
+                        <template v-slot:activator="{ on }">
+                          <v-btn icon v-on="on">
+                            <md-icon class="material-icons">more_vert</md-icon>
+                          </v-btn>
+                        </template>
+                        <v-list>
+                          <v-list-item @click="deleteNote(items.id)">Delete / Trash Note</v-list-item>
+                        </v-list>
+                      </v-menu>
                     </div>
-                  </div>
+                  </v-card-actions>    
                 </v-flex>
               </v-layout>
             </v-card>
           </v-content>
+        </md-app-content>
       </md-app>
     </div>
   </nav>
@@ -174,6 +166,9 @@ export default {
     createNote() {
       this.$router.push("/createnote");
     },
+     goToTrashNotes() {
+      this.$router.push("/trashnotes");
+    },
     logout() {
       try {
         const token = localStorage.getItem("access_token");
@@ -186,12 +181,17 @@ export default {
         console.log(error);
       }
     },
-    reminder() {
-      var x = document.getElementById("show");
-      if (x.style.display === "block") {
-        x.style.display = "none";
-      } else if (x.style.display === "none") {
-        x.style.display = "block";
+    async unArchive(key) {
+      try {
+        const noteDetails = {
+          noteIdList: [key],
+          isArchived: false
+        };
+        const token = localStorage.getItem("access_token");
+        await notes.archiveNote(noteDetails, token);
+        alert("Note Unarchived Successfully");
+      } catch (error) {
+        console.log(error);
       }
     },
     async getArchiveNotes() {
@@ -207,7 +207,7 @@ export default {
       try {
         const noteDetails={
           noteIdList:[key],
-          isArchived:false
+          isDeleted:false
         }
         const token = localStorage.getItem("access_token");
         const response = await notes.deleteNoteForever(noteDetails, token);
@@ -218,7 +218,7 @@ export default {
     }
   },
   mounted() {
-    this.getAllNotes();
+    this.getArchiveNotes();
   }
 };
 </script>

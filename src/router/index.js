@@ -14,6 +14,7 @@ import VueMaterial from 'vue-material'
 import { Datetime } from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
 import ArchiveNotes from '../components/Notes/ArchiveNotes.vue'
+import TrashNotes from '../components/Notes/TrashNotes.vue'
 
 Vue.use(Datetime)
 Vue.use(VueMaterial)
@@ -31,7 +32,7 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Navbar',
-    component: Navbar,
+    component: Navbar
   },
   {
     path: '/login',
@@ -62,6 +63,11 @@ const routes = [
     path: '/archivenotes',
     name: 'ArchiveNotes',
     component: ArchiveNotes
+  },
+  {
+    path: '/trashnotes',
+    name: 'TrashNotes',
+    component: TrashNotes
   },
 ]
 const router = new VueRouter({

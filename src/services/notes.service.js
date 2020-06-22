@@ -22,9 +22,17 @@ export default {
         this.errors.push(e);
       });
   },
+  archiveNote(noteDetails, token) {
+    return axios
+      .post(url + `archiveNotes?access_token=${token}`, noteDetails)
+      .then(response => response.data)
+      .catch(e => {
+        this.errors.push(e);
+      });
+  },
   getNotes(token) {
     return axios
-      .get(url + `/getNotesList?access_token=${token}`)
+      .get(url + `getNotesList?access_token=${token}`)
       .then(response => response.data)
       .catch(e => {
         this.errors.push(e);
@@ -32,7 +40,15 @@ export default {
   },
   deleteNoteForever(noteDetails, token) {
     return axios
-      .post(url + `/deleteForeverNotes?access_token=${token}`,noteDetails)
+      .post(url + `deleteForeverNotes?access_token=${token}`, noteDetails)
+      .then(response => response.data)
+      .catch(e => {
+        this.errors.push(e);
+      });
+  },
+  deleteNote(noteDetails, token) {
+    return axios
+      .post(url + `trashNotes?access_token=${token}`, noteDetails)
       .then(response => response.data)
       .catch(e => {
         this.errors.push(e);
@@ -40,7 +56,15 @@ export default {
   },
   getArchiveNotesList(token) {
     return axios
-      .get(url + `/getArchiveNotesList?access_token=${token}`)
+      .get(url + `getArchiveNotesList?access_token=${token}`)
+      .then(response => response.data)
+      .catch(e => {
+        this.errors.push(e);
+      });
+  },
+  getAllTrashNotes(token) {
+    return axios
+      .get(url + `getTrashNotesList?access_token=${token}`)
       .then(response => response.data)
       .catch(e => {
         this.errors.push(e);

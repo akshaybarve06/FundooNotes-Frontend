@@ -31,7 +31,8 @@
           </md-button>
         </md-app-toolbar>
 
-        <md-app-drawer
+        <md-app-drawer default
+              clipped
           :md-active.sync="menuVisible"
           md-permanent="clipped"
           md-persistent="mini"
@@ -64,7 +65,7 @@
               <span class="md-list-item-text">Archive</span>
             </md-list-item>
 
-            <md-list-item>
+            <md-list-item @click="trashNotes()">
               <md-icon class="material-icons">delete</md-icon>
               <span class="md-list-item-text">Trash</span>
             </md-list-item>
@@ -82,26 +83,14 @@
 
 <script>
 import user from "../../services/user.service";
-
 export default {
   name:"Navbar",
   data() {
     return {
       menuVisible: false,
-      input: {
-        file: "",
-        title: "",
-        description: "",
-        checklist: "",
-        isPinned: "",
-        isArchived: "",
-        color: "",
-        reminder: ""
-      },
       response: ""
     };
   },
-
   methods: {
     toggleMenu() {
       this.menuVisible = !this.menuVisible;
@@ -112,7 +101,10 @@ export default {
     archiveNotes(){
       this.$router.push("/archivenotes");
     },
-        logout() {
+    trashNotes(){
+      this.$router.push("/trashnotes");
+    },
+    logout() {
       try {
         const token = localStorage.getItem("access_token");
         const response = user.logout(token);
@@ -129,4 +121,3 @@ export default {
 <style lang="scss" scoped>
 @import "../../Style/Style.scss"
 </style>
-

@@ -1,8 +1,8 @@
 <!-- 
 * @Description :
 *
-* @file: ForgetPassword.vue
-* @overview: ForgetPassword.vue is page for reset password of user
+* @file: ResetPassword.vue
+* @overview: ResetPassword.vue is page for reset password of user
 * @author: Akshay Dhananjay Barve
 * @version: 20.04
 * @since: 31/05/2020- Wednesday

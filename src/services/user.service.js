@@ -15,7 +15,7 @@ const url='http://fundoonotes.incubation.bridgelabz.com/api/user/';
 export default {
     login(credentials) {
       return axios
-      .post(url + 'login/', credentials)
+      .post(url + 'login', credentials)
       .then(response => response.data)
       .catch(e => {
         this.errors.push(e);
@@ -23,7 +23,7 @@ export default {
     },
     signUp(data) {
         return axios
-          .post(url + 'userSignUp/', data)
+          .post(url + 'userSignUp', data)
           .then(response => response.data)
           .catch(e => {
             this.errors.push(e);
@@ -31,7 +31,7 @@ export default {
     },
     forget(credentials){
       return axios
-          .post(url + 'reset/', credentials)
+          .post(url + 'reset', credentials)
           .then(response => response.data)
           .catch(e => {
             this.errors.push(e);

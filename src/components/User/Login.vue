@@ -11,7 +11,7 @@
 <template>
   <v-app id="inspire">
     <v-content>
-      <v-snackbar color="primary" v-model="input.snackbar" timeout="4000">
+      <v-snackbar color="primary" v-model="input.snackbar" timeout="3000">
         <span>{{input.snackbarText}}</span>
         <v-btn flat text @click="goto()" color="white">OK</v-btn>
         </v-snackbar>
@@ -86,7 +86,7 @@ export default {
       }
     },
     goto(){
-      this.$router.push("/dashboard");
+      this.$router.push("/createnote");
     }
   }
 };

@@ -10,7 +10,7 @@
 -->
 <template>
   <nav>
-    <v-snackbar color="primary" v-model="input.snackbar" timeout="4000">
+    <v-snackbar color="primary" v-model="input.snackbar" timeout="3000">
       <span>{{input.snackbarText}}</span>
       <v-btn flat text @click="goto()" color="white">OK</v-btn>
     </v-snackbar>
@@ -20,9 +20,9 @@
           <md-button class="md-icon-button" @click="toggleMenu">
             <md-icon>menu</md-icon>
           </md-button>
-          <span class="md-title" style="margin: 14px">FUNDOO NOTES</span>
+          <span class="md-title" style="margin: 10px">FUNDOO NOTES</span>
           <v-spacer></v-spacer>
-          <v-text-field style="margin-top: 14px " outlined dense placeholder="Search.."></v-text-field>
+          <v-text-field style="margin-top: 10px " outlined dense placeholder="Search.."></v-text-field>
           <v-spacer></v-spacer>
           <md-button style="margin-right: 14px">
             <md-icon>shopping_cart</md-icon>
@@ -30,9 +30,18 @@
           <md-button style="margin-right: 14px">
             <md-icon>view_agenda</md-icon>
           </md-button>
-          <md-button style="margin-right: 14px" @click="logout()">
-            <md-icon>portrait</md-icon>
-          </md-button>
+          <div class="text-center">
+            <v-menu offset-y>
+              <template v-slot:activator="{ on }">
+                <v-btn icon v-on="on" style="margin-right: 14px">
+                  <md-icon class="material-icons">portrait</md-icon>
+                </v-btn>
+              </template>
+              <v-list >
+                <v-list-item @click="logout()">Logout</v-list-item>
+              </v-list>
+            </v-menu>
+          </div>
         </md-app-toolbar>
         <md-app-drawer :md-active.sync="menuVisible" md-permanent="clipped" md-persistent="mini">
           <br />
@@ -55,12 +64,12 @@
             <br />
             <md-divider></md-divider>
             <br />
-            <md-list-item @click="getArchiveNotes()">
+            <md-list-item @click="goToArchiveNotes()">
               <md-icon class="material-icons">archive</md-icon>
               <span class="md-list-item-text">Archive</span>
             </md-list-item>
 
-            <md-list-item>
+            <md-list-item @click="goToTrash()">
               <md-icon class="material-icons">delete</md-icon>
               <span class="md-list-item-text">Trash</span>
             </md-list-item>
@@ -87,7 +96,7 @@
                 auto-grow
               ></v-textarea>
               <v-card-actions>
-                <v-btn @click="reminder()" text>
+                <v-btn text>
                   <md-icon class="material-icons">notifications_active</md-icon>
                 </v-btn>
                 <v-btn text>
@@ -123,9 +132,29 @@
                   <v-card-title>{{items.title}}</v-card-title>
                   <v-card-text>{{items.description}}</v-card-text>
                   <v-card-actions>
-                    <v-btn icon>
-                      <md-icon class="material-icons">notifications_active</md-icon>
-                    </v-btn>
+                    <v-spacer></v-spacer>
+                    <div class="text-center">
+                      <v-menu offset-x>
+                        <template v-slot:activator="{ on }">
+                          <v-btn icon v-on="on">
+                            <md-icon class="material-icons">notifications_active</md-icon>
+                          </v-btn>
+                        </template>
+                        <v-list>
+                          <md-field>
+                            <label margin="10%">Reminder</label>
+                            <md-select v-model="input.reminder">
+                              <md-datepicker>
+                                <label>Select Custom Date</label>
+                              </md-datepicker>
+                              <md-option value="xx/xx/xxxx">Later Today - 08.00 PM</md-option>
+                              <md-option value="xx/xx/xxxx">Tomorrow - 08.00 AM</md-option>
+                              <md-option value="xx/xx/xxxx">Next Week - MON 08.00 AM</md-option>
+                            </md-select>
+                          </md-field>
+                        </v-list>
+                      </v-menu>
+                    </div>
                     <v-btn icon>
                       <md-icon class="material-icons">person_add</md-icon>
                     </v-btn>
@@ -135,19 +164,28 @@
                     <v-btn icon>
                       <md-icon class="material-icons">panorama</md-icon>
                     </v-btn>
-                    <v-btn icon>
+                    <v-btn icon @click="archive(items.id)">
                       <md-icon class="material-icons">archive</md-icon>
                     </v-btn>
-                    <v-btn @click="reminder()" icon>
-                      <md-icon class="material-icons">more_vert</md-icon>
-                    </v-btn>
+                    <v-spacer></v-spacer>
+                    <div class="text-center">
+                      <v-menu offset-x>
+                        <template v-slot:activator="{ on }">
+                          <v-btn icon v-on="on">
+                            <md-icon class="material-icons">more_vert</md-icon>
+                          </v-btn>
+                        </template>
+                        <v-list>
+                          <v-list-item @click="deleteNote(items.id)">Delete / Trash Note</v-list-item>
+                        </v-list>
+                      </v-menu>
+                    </div>
                     <v-dialog v-model="dialog" width="600">
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on">
                           <md-icon class="material-icons">edit</md-icon>
                         </v-btn>
                       </template>
-
                       <v-card>
                         <v-card-title class="headline grey lighten-2" primary-title>Update Note</v-card-title>
                         <v-text-field flat solo label="Title"></v-text-field>
@@ -185,36 +223,6 @@
                       </v-card>
                     </v-dialog>
                   </v-card-actions>
-                  <div width="200px" id="show" style="display:none;">
-                    <div class="md-layout md-gutter">
-                      <div class="md-lable2">
-                        <md-card width="200px" height="500px">
-                          <md-field>
-                            <md-btn text @click="deleteNote(items.id)">Delete Note</md-btn>
-                          </md-field>
-                        </md-card>
-                      </div>
-                    </div>
-                  </div>
-                  <div width="100px" id="show" style="display:none;">
-                    <div class="md-layout md-gutter">
-                      <div class="md-lable">
-                        <md-card width="100px">
-                          <md-field>
-                            <label>Set Reminder</label>
-                            <md-select v-model="input.reminder">
-                              <md-option value="xx/xx/xxxx">Later Today - 08.00 PM</md-option>
-                              <md-option value="xx/xx/xxxx">Tomorrow - 08.00 AM</md-option>
-                              <md-option value="xx/xx/xxxx">Next Week - MON 08.00 AM</md-option>
-                              <md-datepicker>
-                                <label>Select Custom Date</label>
-                              </md-datepicker>
-                            </md-select>
-                          </md-field>
-                        </md-card>
-                      </div>
-                    </div>
-                  </div>
                 </v-flex>
               </v-layout>
             </v-card>
@@ -252,44 +260,55 @@ export default {
     toggleMenu() {
       this.menuVisible = !this.menuVisible;
     },
+    goToTrash() {
+      this.$router.push("/trashnotes");
+    },
     createNote() {
       this.$router.push("/createnote");
     },
     openCard() {
       this.isdisplay = false;
     },
-    closeCard() {
-      if (this.input.title != " " && this.input.description != " ") {
+    async closeCard() {
+      if (this.input.title == "" || this.input.description == "")
+        this.isdisplay = true;
+      else {
         try {
           const noteDetails = {
             title: this.input.title,
-            description: this.input.description,
-            reminder: this.input.reminder
+            description: this.input.description
           };
-          const token = localStorage.getItem("access_token");
-          notes.addNote(noteDetails, token);
-          location.reload();
+          const token = await localStorage.getItem("access_token");
+          const response=notes.addNote(noteDetails, token);
+          alert("..."+response)
+          this.$router.go()
         } catch (error) {
           console.log(error);
         }
-      } else this.isdisplay = true;
+      }
     },
-    logout() {
+
+    async logout() {
       try {
         const token = localStorage.getItem("access_token");
-        user.logout(token);
+        await user.logout(token);
         this.input.snackbar = true;
         this.input.snackbarText = "User Logged Out SuccessFully ";
       } catch (error) {
         console.log(error);
       }
     },
-    reminder() {
-      var x = document.getElementById("show");
-      if (x.style.display === "block") {
-        x.style.display = "none";
-      } else if (x.style.display === "none") {
-        x.style.display = "block";
+    async archive(key) {
+      try {
+        const noteDetails = {
+          noteIdList: [key],
+          isArchived: true
+        };
+        const token = localStorage.getItem("access_token");
+        await notes.archiveNote(noteDetails, token);
+        alert("Note Archived Successfully");
+      } catch (error) {
+        console.log(error);
       }
     },
     async getAllNotes() {
@@ -297,23 +316,23 @@ export default {
         const token = localStorage.getItem("access_token");
         const response = await notes.getNotes(token);
         this.allNotes = response.data.data;
-        console.log("All Notes...." + this.allNotes);
       } catch (error) {
         console.log("error" + error);
       }
     },
-    async getArchiveNotes(){
+    async goToArchiveNotes() {
       this.$router.push("/archivenotes");
     },
     async deleteNote(key) {
       try {
         const noteDetails = {
           noteIdList: [key],
-          isArchived: false
+          isDeleted: true
         };
         const token = localStorage.getItem("access_token");
-        const response = await notes.deleteNoteForever(noteDetails, token);
-        alert("response" + response);
+        await notes.deleteNote(noteDetails, token);
+        alert("Note Deleted Successfully");
+        this.$router.go()
       } catch (error) {
         console.log("error" + error);
       }
