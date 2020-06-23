@@ -9,101 +9,117 @@
 *
 -->
 <template>
-  <nav>
-    <div>
-      <md-app>
-        <md-app-toolbar fixed app class="amber">
-          <md-button class="md-icon-button" @click="toggleMenu">
-            <md-icon>menu</md-icon>
-          </md-button>
-          <span class="md-title" style="margin: 14px">FUNDOO NOTES</span>
-          <v-spacer></v-spacer>
-          <v-text-field width="50" style="margin-top: 14px " dense placeholder="Search.."></v-text-field>
-          <v-spacer></v-spacer>
-          <md-button style="margin-right: 14px">
-            <md-icon>shopping_cart</md-icon>
-          </md-button>
-          <md-button style="margin-right: 14px">
-            <md-icon>view_agenda</md-icon>
-          </md-button>
-          <md-button style="margin-right: 14px" @click="logout()">
-            <md-icon>portrait</md-icon>
-          </md-button>
-        </md-app-toolbar>
-
-        <md-app-drawer default
-              clipped
-          :md-active.sync="menuVisible"
-          md-permanent="clipped"
-          md-persistent="mini"
-          md-swipe-threshold="20"
-        >
-          <br />
-          <md-list>
-            <md-list-item @click="createNote()">
-              <md-icon>lightbulb_outline</md-icon>
-              <span class="md-list-item-text">Note</span>
-            </md-list-item>
-
-            <md-list-item>
-              <md-icon class="material-icons">add_alert</md-icon>
-              <span class="md-list-item-text">Reminder</span>
-            </md-list-item>
-            <br />
-
-            <md-divider></md-divider>
-            <br />
-            <md-list-item>
-              <md-icon class="material-icons">add</md-icon>
-              <span class="md-list-item-text">Create New Lable</span>
-            </md-list-item>
-            <br />
-            <md-divider></md-divider>
-            <br />
-            <md-list-item @click="archiveNotes()">
-              <md-icon class="material-icons">archive</md-icon>
-              <span class="md-list-item-text">Archive</span>
-            </md-list-item>
-
-            <md-list-item @click="trashNotes()">
-              <md-icon class="material-icons">delete</md-icon>
-              <span class="md-list-item-text">Trash</span>
-            </md-list-item>
-            <md-list-item>
-              <md-icon class="material-icons">help_outline</md-icon>
-              <span class="md-list-item-text">Help</span>
-            </md-list-item>
-          </md-list>
-        </md-app-drawer>
-       <router-view></router-view>
-      </md-app>
-    </div>
-  </nav>
+  <v-app>
+    <v-app-bar app clipped-left color="amber">
+      <md-button class="md-icon-button" @click="drawer = !drawer">
+        <md-icon>menu</md-icon>
+      </md-button>
+      <v-toolbar-title>
+        <span>FundooNotes</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-text-field
+        prepend-inner-icon="mdi-magnify"
+        class="mx-4"
+        flat
+        filled
+        dense
+        hide-details
+        placeholder="Search"
+        autocomplete="off"
+      ></v-text-field>
+      <v-spacer></v-spacer>
+      <v-btn text>
+        <v-icon>shopping_cart</v-icon>
+      </v-btn>
+      <v-btn text>
+        <v-icon>view_agenda</v-icon>
+      </v-btn>
+      <div class="text-center">
+        <v-menu v-model="menu">
+          <template v-slot:activator="{ on }">
+            <v-btn text v-on="on">
+              <v-icon>portrait</v-icon>
+            </v-btn>
+          </template>
+          <v-card>
+            <v-list>
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>{{ userEmail }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn text @click="menu = false">Cancel</v-btn>
+              <v-btn text @click="logout()">Logout</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-menu>
+      </div>
+    </v-app-bar>
+    <v-navigation-drawer v-model="drawer" app clipped expand-on-hover floating>
+      <v-list dense>
+        <template v-for="(link, i) in links">
+          <v-row v-if="link.heading" :key="i" align="center">
+            <v-col cols="6">
+              <v-subheader v-if="link.heading">{{ link.heading }}</v-subheader>
+            </v-col>
+            <v-col cols="6" class="text-right">
+              <v-btn small text>edit</v-btn>
+            </v-col>
+          </v-row>
+          <v-divider v-else-if="link.divider" :key="i" dark class="my-4"></v-divider>
+          <v-list-item v-else :key="i" router :to="link.route">
+            <v-list-item-action>
+              <v-icon>{{ link.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ link.text }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+      </v-list>
+    </v-navigation-drawer>
+    <v-main>
+      <v-container fluid>
+        <div class="container">
+          <router-view></router-view>
+        </div>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
-
 <script>
 import user from "../../services/user.service";
 export default {
-  name:"Navbar",
+  name: "Navbar",
+  props: {
+    msg: String
+  },
   data() {
     return {
-      menuVisible: false,
-      response: ""
+      userEmail: localStorage.getItem("email"),
+
+      menu: false,
+
+      drawer: true,
+      link: 0,
+      links: [
+        { text: "Notes", icon: "lightbulb_outline", route: "notes" },
+        { text: "Reminder", icon: "add_alert" },
+        { divider: true },
+        { text: "Create New Lable", icon: "add" },
+        { divider: true },
+        { text: "Archive", icon: "archive", route: "archivenotes" },
+        { text: "Trash", icon: "delete", route: "trashnotes" },
+        { text: "Help", icon: "help_outline", route: "help" }
+      ]
     };
   },
   methods: {
-    toggleMenu() {
-      this.menuVisible = !this.menuVisible;
-    },
-    createNote() {
-      this.$router.push("/createnote");
-    },
-    archiveNotes(){
-      this.$router.push("/archivenotes");
-    },
-    trashNotes(){
-      this.$router.push("/trashnotes");
-    },
     logout() {
       try {
         const token = localStorage.getItem("access_token");
@@ -114,10 +130,10 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
+    }
   }
 };
 </script>
 <style lang="scss" scoped>
-@import "../../Style/Style.scss"
+@import "../../css/Navbar.scss";
 </style>

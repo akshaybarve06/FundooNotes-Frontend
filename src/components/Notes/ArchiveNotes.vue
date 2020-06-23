@@ -9,65 +9,9 @@
 *
 -->
 <template>
-  <nav>
-    <div>
-      <md-app>
-        <md-app-toolbar fixed app class="amber">
-          <md-button class="md-icon-button" @click="toggleMenu">
-            <md-icon>menu</md-icon>
-          </md-button>
-          <span class="md-title" style="margin: 14px">FUNDOO NOTES</span>
-          <v-spacer></v-spacer>
-          <v-text-field style="margin-top: 14px " outlined dense placeholder="Search.."></v-text-field>
-          <v-spacer></v-spacer>
-          <md-button style="margin-right: 14px">
-            <md-icon>shopping_cart</md-icon>
-          </md-button>
-          <md-button style="margin-right: 14px">
-            <md-icon>view_agenda</md-icon>
-          </md-button>
-          <md-button style="margin-right: 14px" @click="logout()">
-            <md-icon>portrait</md-icon>
-          </md-button>
-        </md-app-toolbar>
-        <md-app-drawer :md-active.sync="menuVisible" md-permanent="clipped" md-persistent="mini">
-          <br />
-          <md-list>
-            <md-list-item @click="createNote()">
-              <md-icon>lightbulb_outline</md-icon>
-              <span class="md-list-item-text">Note</span>
-            </md-list-item>
-            <md-list-item>
-              <md-icon class="material-icons">add_alert</md-icon>
-              <span class="md-list-item-text">Reminder</span>
-            </md-list-item>
-            <br />
-            <md-divider></md-divider>
-            <br />
-            <md-list-item>
-              <md-icon class="material-icons">add</md-icon>
-              <span class="md-list-item-text">Create New Lable</span>
-            </md-list-item>
-            <br />
-            <md-divider></md-divider>
-            <br />
-            <md-list-item @click="getArchiveNotes()">
-              <md-icon class="material-icons">archive</md-icon>
-              <span class="md-list-item-text">Archive</span>
-            </md-list-item>
-
-            <md-list-item @click="goToTrashNotes()">
-              <md-icon class="material-icons">delete</md-icon>
-              <span class="md-list-item-text">Trash</span>
-            </md-list-item>
-            <md-list-item>
-              <md-icon class="material-icons">help_outline</md-icon>
-              <span class="md-list-item-text">Help</span>
-            </md-list-item>
-          </md-list>
-        </md-app-drawer>
-        <md-app-content>
-          <v-content>
+  <v-app>
+    <div class="container">
+      <v-main>
             <v-card
               style="margin: 7px"
               class="d-inline-flex"
@@ -75,9 +19,9 @@
               :key="items.id"
             >
               <v-layout>
-                <v-flex xs8 class="pr-3">
+                <v-flex xs12 class="pr-3">
                   <v-card-title>{{items.title}}</v-card-title>
-                  <v-card-text>{{items.description}}</v-card-text>
+                  <v-textarea flat solo rows="1" v-model="items.description" auto-grow></v-textarea>
                   <v-card-actions>
                     <div class="text-center">
                       <v-menu offset-x>
@@ -130,17 +74,14 @@
                 </v-flex>
               </v-layout>
             </v-card>
-          </v-content>
-        </md-app-content>
-      </md-app>
+      </v-main>
     </div>
-  </nav>
+  </v-app>
 </template>
 <script>
-import user from "../../services/user.service";
 import notes from "../../services/notes.service";
 export default {
-  name:"CreateNote",
+  name:"ArchiveNotes",
   data() {
     return {
       menuVisible: false,
@@ -154,33 +95,14 @@ export default {
         isPinned: "",
         isArchived: "",
         color: "",
-        reminder: ""
+        reminder: "",
+        snackbar: false,
+        snackbarText: ""
       },
       response: ""
     };
   },
   methods: {
-    toggleMenu() {
-      this.menuVisible = !this.menuVisible;
-    },
-    createNote() {
-      this.$router.push("/createnote");
-    },
-     goToTrashNotes() {
-      this.$router.push("/trashnotes");
-    },
-    logout() {
-      try {
-        const token = localStorage.getItem("access_token");
-        const response = user.logout(token);
-        alert("Logout Successful...");
-        this.snackbar = true;
-        this.msg = response.msg;
-        this.$router.push("/login");
-      } catch (error) {
-        console.log(error);
-      }
-    },
     async unArchive(key) {
       try {
         const noteDetails = {
@@ -190,6 +112,7 @@ export default {
         const token = localStorage.getItem("access_token");
         await notes.archiveNote(noteDetails, token);
         alert("Note Unarchived Successfully");
+        this.$router.go()
       } catch (error) {
         console.log(error);
       }
@@ -210,8 +133,9 @@ export default {
           isDeleted:false
         }
         const token = localStorage.getItem("access_token");
-        const response = await notes.deleteNoteForever(noteDetails, token);
-        alert("response"+response)
+        await notes.deleteNote(noteDetails, token);
+        alert("Note Deleted Successfully")
+        this.$router.go()
       } catch (error) {
         console.log("error" + error);
       }
@@ -222,7 +146,3 @@ export default {
   }
 };
 </script>
-
-<style >
-@import "../../Style/Style.scss"
-</style>

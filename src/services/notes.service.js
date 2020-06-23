@@ -18,56 +18,56 @@ export default {
     return axios
       .post(url + `addNotes?access_token=${token}`, noteDetails)
       .then(response => response.data)
-      .catch(e => {
-        this.errors.push(e);
+      .catch((error) => {
+        return error;
       });
   },
   archiveNote(noteDetails, token) {
     return axios
       .post(url + `archiveNotes?access_token=${token}`, noteDetails)
       .then(response => response.data)
-      .catch(e => {
-        this.errors.push(e);
+      .catch((error) => {
+        return error;
       });
   },
   getNotes(token) {
     return axios
       .get(url + `getNotesList?access_token=${token}`)
       .then(response => response.data)
-      .catch(e => {
-        this.errors.push(e);
+      .catch((error) => {
+        return error;
       });
   },
   deleteNoteForever(noteDetails, token) {
     return axios
       .post(url + `deleteForeverNotes?access_token=${token}`, noteDetails)
       .then(response => response.data)
-      .catch(e => {
-        this.errors.push(e);
+      .catch((error) => {
+        return error;
       });
   },
   deleteNote(noteDetails, token) {
     return axios
       .post(url + `trashNotes?access_token=${token}`, noteDetails)
       .then(response => response.data)
-      .catch(e => {
-        this.errors.push(e);
+      .catch((error) => {
+        return error;
       });
   },
   getArchiveNotesList(token) {
     return axios
       .get(url + `getArchiveNotesList?access_token=${token}`)
       .then(response => response.data)
-      .catch(e => {
-        this.errors.push(e);
+      .catch((error) => {
+        return error;
       });
   },
   getAllTrashNotes(token) {
     return axios
       .get(url + `getTrashNotesList?access_token=${token}`)
       .then(response => response.data)
-      .catch(e => {
-        this.errors.push(e);
+      .catch((error) => {
+        return error;
       });
   }
 }

@@ -17,40 +17,40 @@ export default {
       return axios
       .post(url + 'login', credentials)
       .then(response => response.data)
-      .catch(e => {
-        this.errors.push(e);
+      .catch((error) => {
+        return error;
       });
     },
     signUp(data) {
         return axios
           .post(url + 'userSignUp', data)
           .then(response => response.data)
-          .catch(e => {
-            this.errors.push(e);
+          .catch((error) => {
+            return error;
           });
     },
     forget(credentials){
       return axios
           .post(url + 'reset', credentials)
           .then(response => response.data)
-          .catch(e => {
-            this.errors.push(e);
+          .catch((error) => {
+            return error;
           });
     },
     reset(credentials, token){
       return axios
           .post(url + `reset-password?access_token=${token}`, credentials)
           .then(response => response.data)
-          .catch(e => {
-            this.errors.push(e);
+          .catch((error) => {
+            return error;
           });
     },
     logout(token){
       return axios
           .post(url + `logout?access_token=${token}`)
           .then(response => response.data)
-          .catch(e => {
-            this.errors.push(e);
+          .catch((error) => {
+            return error;
           });
     },
 }

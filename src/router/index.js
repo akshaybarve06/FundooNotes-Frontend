@@ -6,7 +6,7 @@ import Register from '../components/User/Register.vue'
 import ForgetPassword from '../components/User/ForgetPassword.vue'
 import ResetPassword from '../components/User/ResetPassword.vue'
 import Navbar from '../components/Notes/Navbar.vue'
-import CreateNote from '../components/Notes/CreateNote.vue'
+//import CreateNote from '../components/Notes/CreateNote.vue'
 import { MdButton, MdContent, MdTabs } from 'vue-material/dist/components'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
@@ -15,6 +15,7 @@ import { Datetime } from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
 import ArchiveNotes from '../components/Notes/ArchiveNotes.vue'
 import TrashNotes from '../components/Notes/TrashNotes.vue'
+import Note from '../components/Notes/Note.vue'
 
 Vue.use(Datetime)
 Vue.use(VueMaterial)
@@ -25,14 +26,31 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/home',
+    path: '/',
     name: 'Home',
     component: Home
   },
   {
     path: '/dashboard',
     name: 'Navbar',
-    component: Navbar
+    component: Navbar,
+    children:[
+      {
+        path: '/notes',
+        name: 'Note',
+        component: Note
+      },
+      {
+        path: '/archivenotes',
+        name: 'ArchiveNotes',
+        component: ArchiveNotes
+      },
+      {
+        path: '/trashnotes',
+        name: 'TrashNotes',
+        component: TrashNotes
+      },
+    ]
   },
   {
     path: '/login',
@@ -54,21 +72,7 @@ const routes = [
     name: 'ResetPassword',
     component: ResetPassword
   },
-  {
-    path: '/createnote',
-    name: 'CreateNote',
-    component: CreateNote
-  },
-  {
-    path: '/archivenotes',
-    name: 'ArchiveNotes',
-    component: ArchiveNotes
-  },
-  {
-    path: '/trashnotes',
-    name: 'TrashNotes',
-    component: TrashNotes
-  },
+  
 ]
 const router = new VueRouter({
   mode: 'history',
