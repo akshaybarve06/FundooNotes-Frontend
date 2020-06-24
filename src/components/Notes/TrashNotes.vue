@@ -54,7 +54,6 @@ export default {
         const token = localStorage.getItem("access_token");
         await notes.deleteNoteForever(noteDetails, token);
         alert("Note Deleted Forever");
-        this.$router.go();
       } catch (error) {
         console.log("error" + error);
       }
@@ -68,7 +67,6 @@ export default {
         const token = localStorage.getItem("access_token");
         await notes.deleteNote(noteDetails, token);
         alert("Note Restored Successfully");
-        this.$router.go();
       } catch (error) {
         console.log("error" + error);
       }

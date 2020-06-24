@@ -11,7 +11,7 @@
 <template>
   <v-app>
     <div class="container">
-      <v-main>
+      <v-main >
             <v-card
               style="margin: 7px"
               class="d-inline-flex"
@@ -112,7 +112,6 @@ export default {
         const token = localStorage.getItem("access_token");
         await notes.archiveNote(noteDetails, token);
         alert("Note Unarchived Successfully");
-        this.$router.go()
       } catch (error) {
         console.log(error);
       }
@@ -135,7 +134,6 @@ export default {
         const token = localStorage.getItem("access_token");
         await notes.deleteNote(noteDetails, token);
         alert("Note Deleted Successfully")
-        this.$router.go()
       } catch (error) {
         console.log("error" + error);
       }

@@ -9,54 +9,39 @@
 *
 -->
 <template>
-  <v-app>
-    <div class="container">
-      <v-main>
-        <div style="margin-bottom: 15px">
-          <v-card class="md-layout-item1" v-show="isdisplay" @click="openCard()">
-            <v-text-field flat placeholder="Take A Note " solo></v-text-field>
-          </v-card>
-          <v-card class="md-layout-item2" v-show="!isdisplay">
-            <v-text-field flat solo rows="1" v-model="input.title"  label="Title"></v-text-field>
-            <v-textarea
-              flat
-              solo
-              rows="1"
-              v-model="input.description"
-              label="Take A Note"
-              auto-grow
-            ></v-textarea>
-            <v-card-actions>
-              <v-btn text>
-                <md-icon class="material-icons">notifications_active</md-icon>
-              </v-btn>
-              <v-btn text>
-                <md-icon class="material-icons">person_add</md-icon>
-              </v-btn>
-              <v-btn text>
-                <md-icon class="material-icons">palette</md-icon>
-              </v-btn>
-              <v-btn text>
-                <md-icon class="material-icons">panorama</md-icon>
-              </v-btn>
-              <v-btn text>
-                <md-icon class="material-icons">archive</md-icon>
-              </v-btn>
-              <v-btn text>
-                <md-icon class="material-icons">more_vert</md-icon>
-              </v-btn>
-              <v-spacer></v-spacer>
-              <v-btn text @click="closeCard()">close</v-btn>
-            </v-card-actions>
-          </v-card>
-        </div>
-      </v-main>
+  <div>
+    <v-main>
+      <div style="margin-bottom: 15px">
+        <v-card class="md-layout-item1" v-show="isdisplay" @click="openCard()">
+          <v-text-field flat placeholder="Take A Note " solo></v-text-field>
+        </v-card>
+        <v-card class="md-layout-item2" v-show="!isdisplay">
+          <v-text-field flat solo rows="1" v-model="input.title" label="Title"></v-text-field>
+          <v-textarea flat solo rows="1" v-model="input.description" label="Take A Note" auto-grow></v-textarea>
+          <v-card-actions>
+            <Icon style="padding-left:10px" v-bind:card="true" />
+            <v-spacer></v-spacer>
+            <v-btn text @click="closeCard()">close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </div>
+    </v-main>
+    <div>
+      <AllNotes ref="updatedNote" />
     </div>
-  </v-app>
+  </div>
 </template>
 <script>
+import Icon from "../Icon";
 import notes from "../../services/notes.service";
+import AllNotes from "../Notes/ShowAllNotes";
 export default {
+  name: "CreateNote",
+  props: ["card"],
+  components: {
+    Icon,
+    AllNotes
+  },
   data() {
     return {
       menuVisible: false,
@@ -91,15 +76,21 @@ export default {
             description: this.input.description
           };
           const token = await localStorage.getItem("access_token");
-          const response = notes.addNote(noteDetails, token);
-          alert("..." + response.msg);
-          this.$router.go();
+          notes.addNote(noteDetails, token);
+          this.$refs.updatedNote.getAllNotes();
+          alert("Note Added Successfully");
         } catch (error) {
           console.log(error);
         }
       }
     },
-    },
+    getId(items) {
+      return items;
+    }
+  },
+  mounted() {
+    this.getId();
+  }
 };
 </script>
 <style lang="scss" scoped>

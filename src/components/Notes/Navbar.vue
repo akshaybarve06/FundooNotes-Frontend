@@ -108,12 +108,12 @@ export default {
       drawer: true,
       link: 0,
       links: [
-        { text: "Notes", icon: "lightbulb_outline", route: "notes" },
+        { text: "Notes", icon: "lightbulb_outline", route: "note" },
         { text: "Reminder", icon: "add_alert" },
         { divider: true },
         { text: "Create New Lable", icon: "add" },
         { divider: true },
-        { text: "Archive", icon: "archive", route: "archivenotes" },
+        { text: "Archive", icon: "archive", route: "archive" },
         { text: "Trash", icon: "delete", route: "trashnotes" },
         { text: "Help", icon: "help_outline", route: "help" }
       ]

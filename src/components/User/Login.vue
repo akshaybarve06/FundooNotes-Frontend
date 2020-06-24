@@ -86,7 +86,7 @@ export default {
       }
     },
     goto(){
-      this.$router.push("/createnote");
+      this.$router.push("/dashboard");
     }
   }
 };
