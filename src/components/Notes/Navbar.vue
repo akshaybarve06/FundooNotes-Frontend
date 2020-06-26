@@ -102,9 +102,7 @@ export default {
   data() {
     return {
       userEmail: localStorage.getItem("email"),
-
       menu: false,
-
       drawer: true,
       link: 0,
       links: [
@@ -114,7 +112,7 @@ export default {
         { text: "Create New Lable", icon: "add" },
         { divider: true },
         { text: "Archive", icon: "archive", route: "archive" },
-        { text: "Trash", icon: "delete", route: "trashnotes" },
+        { text: "Trash", icon: "delete", route: "trash" },
         { text: "Help", icon: "help_outline", route: "help" }
       ]
     };

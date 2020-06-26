@@ -9,7 +9,7 @@
 *
 -->
 <template>
-  <div>
+  <div >
     <v-main>
       <div style="margin-bottom: 15px">
         <v-card class="md-layout-item1" v-show="isdisplay" @click="openCard()">
@@ -19,7 +19,7 @@
           <v-text-field flat solo rows="1" v-model="input.title" label="Title"></v-text-field>
           <v-textarea flat solo rows="1" v-model="input.description" label="Take A Note" auto-grow></v-textarea>
           <v-card-actions>
-            <Icon style="padding-left:10px" v-bind:card="true" />
+            <Icon v-bind:card="true" />
             <v-spacer></v-spacer>
             <v-btn text @click="closeCard()">close</v-btn>
           </v-card-actions>
@@ -56,8 +56,6 @@ export default {
         isArchived: "",
         color: "",
         reminder: "",
-        snackbar: false,
-        snackbarText: ""
       },
       response: ""
     };

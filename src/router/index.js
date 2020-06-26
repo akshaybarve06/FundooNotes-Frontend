@@ -13,7 +13,7 @@ import 'vue-material/dist/theme/default.css'
 import VueMaterial from 'vue-material'
 import { Datetime } from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
-import Archive from '../components/Notes/Archive.vue'
+import Archive from '../components/Notes/ArchiveNotes.vue'
 import TrashNotes from '../components/Notes/TrashNotes.vue'
 import Note from '../components/Notes/Note.vue'
 
@@ -46,8 +46,8 @@ const routes = [
         component: Archive
       },
       {
-        path: '/trashnotes',
-        name: 'TrashNotes',
+        path: '/trash',
+        name: 'Trash',
         component: TrashNotes
       },
     ]

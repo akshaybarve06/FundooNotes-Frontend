@@ -1,11 +1,11 @@
 <!--
 * @Description :
 *
-* @file: Icon.vue
-* @overview: Icon.vue is component for all icons in project
+* @file: ArchiveIcon.vue
+* @overview: ArchiveIcon.vue is component for all archive icons in project
 * @author: Akshay Dhananjay Barve
 * @version: 20.04
-* @since: 23/06/2020- Tuesday
+* @since: 24/06/2020- Wednesday
 *
 -->
 <template>
@@ -24,18 +24,9 @@
         <img src="../assets/image.svg" />
       </v-btn>
       <v-btn icon>
-        <img src="../assets/archive.svg" @click="archive(note.id)"  />
+        <img src="../assets/unarchive.svg" @click="unArchive(note.id)"  />
       </v-btn>
-      <md-menu md-size="small" md-align-trigger v-if="card==true">
-        <v-btn icon>
-          <md-icon md-menu-trigger md-size="small">more_vert</md-icon>
-        </v-btn>
-        <md-menu-content>
-          <md-menu-item>Add Lable</md-menu-item>
-          <md-menu-item>Add Drawing</md-menu-item>
-          <md-menu-item>Make A Copy</md-menu-item>
-        </md-menu-content>
-      </md-menu><md-menu md-size="small" md-align-trigger v-if="card==false">
+      <md-menu md-size="small" md-align-trigger >
         <v-btn icon>
           <md-icon md-menu-trigger md-size="small">more_vert</md-icon>
         </v-btn>
@@ -54,25 +45,26 @@
 <script>
 import notes from "../services/notes.service";
 export default {
-  name: "Icon",
-  props: ["note","card"],
+  name: "ArchiveIcon",
+  props: ["note"],
   methods: {
-    async archive(key) {
+    async unArchive(key) {
       try {
         const noteDetails = {
           noteIdList: [key],
-          isArchived: true
+          isArchived: false
         };
         const token = localStorage.getItem("access_token");
         await notes.archiveNote(noteDetails, token);
-        alert("Note Archived Successfully");
-        this.$root.$refs.ShowAllNotes.getAllNotes();
+        this.$root.$refs.ShowAllArchiveNotes.getArchiveNotes();
+        alert("Note Unarchived Successfully");
       } catch (error) {
         console.log(error);
       }
     },
     async deleteNote(key) {
       try {
+          console.log("Key..."+key)
         const noteDetails = {
           noteIdList: [key],
           isDeleted: true
@@ -80,7 +72,7 @@ export default {
         const token = localStorage.getItem("access_token");
         await notes.deleteNote(noteDetails, token);
         alert("Note Deleted Successfully");
-        this.$root.$refs.ShowAllNotes.getAllNotes();
+        this.$root.$refs.ShowAllArchiveNotes.getArchiveNotes();
       } catch (error) {
         console.log("error" + error);
       }
