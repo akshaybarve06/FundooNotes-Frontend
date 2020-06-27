@@ -15,8 +15,8 @@
         <v-card class="md-layout-item1" v-show="isdisplay" @click="openCard()">
           <v-text-field flat placeholder="Take A Note " solo></v-text-field>
         </v-card>
-        <v-card class="md-layout-item2" v-show="!isdisplay">
-          <v-text-field flat solo rows="1" v-model="input.title" label="Title"></v-text-field>
+        <v-card class="createnotecard" v-show="!isdisplay">
+          <v-textarea flat solo rows="1" style="padding-bottom:1%" v-model="input.title" auto-grow label="Title"></v-textarea>
           <v-textarea flat solo rows="1" v-model="input.description" label="Take A Note" auto-grow></v-textarea>
           <v-card-actions>
             <Icon v-bind:card="true" />
@@ -32,7 +32,7 @@
   </div>
 </template>
 <script>
-import Icon from "../Icon";
+import Icon from "../Icons/ShowNoteIcon";
 import notes from "../../services/notes.service";
 import AllNotes from "../Notes/ShowAllNotes";
 export default {

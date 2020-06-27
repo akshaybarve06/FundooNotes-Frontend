@@ -22,7 +22,7 @@
                 <v-flex xs12 class="pr-3">
                   <v-card-title>{{items.title}}</v-card-title>
                   <v-textarea flat solo rows="1" v-model="items.description" auto-grow></v-textarea>
-                  <ArchiveIcon style="padding-left:10px" v-bind:note="items"/>   
+                  <ArchiveIcon style="padding-left:5px" v-bind:note="items"/>   
                 </v-flex>
               </v-layout>
             </v-card>
@@ -32,13 +32,12 @@
 </template>
 <script>
 import notes from "../../services/notes.service";
-import ArchiveIcon from "../ArchiveIcon";
+import ArchiveIcon from "../Icons/ArchiveNoteIcon";
 export default {
   name:"ArchiveNotes",
   components:{
     ArchiveIcon
   },
-  props:["card"],
   data() {
     return {
       menuVisible: false,

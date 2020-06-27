@@ -16,32 +16,39 @@
           @click="getId(items)"
           style="margin: 5px"
           class="d-inline-flex"
-          v-for="items in allNotes.slice().reverse()"
+          v-for="items in allNotes"
           :key="items.id"
         >
-          <v-card>
+          <v-card @click="openDialog(items)">
             <v-layout>
-              <v-flex xs12 class="pr-10">
-                <v-card-title>{{items.title}}</v-card-title>
-                  <v-textarea flat solo rows="1" v-model="items.description" auto-grow></v-textarea>
+              <v-flex xs10 class="pr-8">
+                <v-card-title >{{items.title}}</v-card-title>
+                <v-textarea flat solo rows="1" v-model="items.description" auto-grow></v-textarea>
                 <v-card-actions>
                   <Icon v-bind:note="items" v-bind:card="false" />
-                </v-card-actions>               
+                </v-card-actions>
               </v-flex>
             </v-layout>
           </v-card>
         </v-card>
+        <v-dialog width="500px"  v-model="dialog">
+             <v-card padding=100px>
+            <updateNote v-bind:noteDetails="newArray" ref="updatedNote"/>
+             </v-card>
+          </v-dialog>
       </v-content>
     </div>
   </v-app>
 </template>
 <script>
 import notes from "../../services/notes.service";
-import Icon from "../Icon";
+import Icon from "../Icons/ShowNoteIcon";
+import updateNote from "./UpdateNote";
 export default {
   name: "ArchiveNotes",
   props: ["notes", "card"],
   components: {
+    updateNote,
     Icon
   },
   data() {
@@ -49,10 +56,16 @@ export default {
       menuVisible: false,
       isdisplay: true,
       allNotes: [],
-      response: ""
+      newArray:[],
+      response: "",
+      dialog:""
     };
   },
   methods: {
+    openDialog(items) {
+      this.newArray=items
+      this.dialog=true
+    },
     async getAllNotes() {
       try {
         const token = localStorage.getItem("access_token");
@@ -69,9 +82,10 @@ export default {
       return items;
     }
   },
-  created() {
-    this.$root.$refs.ShowAllNotes = this;
-  },
+   created() {
+     this.$root.$refs.ShowAllNotes = this;
+     this.$refs.updatedNote.getAllNotes();
+   },
   mounted() {
     this.getAllNotes();
     this.getId();

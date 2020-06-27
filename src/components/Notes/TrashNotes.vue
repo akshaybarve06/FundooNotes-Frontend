@@ -16,7 +16,7 @@
           <v-layout>
             <v-flex xs8 class="pr-3">
               <v-card-title>{{items.title}}</v-card-title>
-              <v-card-text>{{items.description}}</v-card-text>
+              <v-textarea flat solo rows="1" v-model="items.description" auto-grow></v-textarea>
               <v-card-actions>
                 <v-btn text @click="restoreNote(items.id)">
                   <md-icon class="material-icons">restore</md-icon>

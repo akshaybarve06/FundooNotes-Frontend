@@ -30,6 +30,14 @@ export default {
         return error;
       });
   },
+  updateNote(noteDetails, token) {
+    return axios
+      .post(url + `updateNotes?access_token=${token}`, noteDetails)
+      .then(response => response.data)
+      .catch((error) => {
+        return error;
+      });
+  },
   getNotes(token) {
     return axios
       .get(url + `getNotesList?access_token=${token}`)
