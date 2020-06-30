@@ -23,7 +23,6 @@
             <v-layout>
               <v-flex xs12 class="pr-5">
                 <v-card v-model="showImage">
-                  <img src="imageURL" alt="">
                 </v-card>
                 <v-card-title @click="openDialog(items)">{{items.title}}</v-card-title>
                 <v-textarea flat solo rows="1" v-model="items.description" @click="openDialog(items)" auto-grow></v-textarea>

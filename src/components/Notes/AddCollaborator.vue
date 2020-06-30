@@ -51,13 +51,13 @@ export default {
     },
     async addCollaborator() {
         try {
-         const noteDetails = {
-           firstName: this.firstName,
-           lastname:this.lastName,
+         const userDetails = {
            email:this.email,
+           firstName: this.firstName,
+           lastName:this.lastName,
            userId:this.userId
          };
-         notes.addCollaboratorNotes(this.noteId, noteDetails);
+         notes.addCollaboratorNotes(this.noteId, userDetails);
          alert("Note Updated Successfully");
          this.dialog = false;
        } catch (error) {

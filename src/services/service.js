@@ -12,17 +12,9 @@
 import axios from "axios";
 
 export default {
-  postData(mainUrl, subUrl, noteDetails) {
+  postData(mainUrl, subUrl, details) {
     return axios
-      .post(mainUrl + subUrl, noteDetails)
-      .then(response => response.data)
-      .catch((error) => {
-        return error;
-      });
-  },
-  postWithId(mainUrl, id, subUrl, noteDetails) {
-    return axios
-      .post(mainUrl + id + subUrl, noteDetails)
+      .post(mainUrl + subUrl, details)
       .then(response => response.data)
       .catch((error) => {
         return error;

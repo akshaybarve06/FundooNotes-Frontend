@@ -17,6 +17,7 @@ const token = localStorage.getItem("access_token");
 export default {
 
   addNote(noteDetails) {
+    console.log("Token..."+token)
     console.log("Inside Notes service...")
     return service.postData(url, `addNotes?access_token=${token}`, noteDetails)
   },
@@ -42,6 +43,6 @@ export default {
     return service.getNotes(url, `getTrashNotesList?access_token=${token}`)
   },
   addCollaboratorNotes(id, noteDetails) {
-    return service.postWithId(url, `${id}` + `/AddcollaboratorsNotes?access_token=${token}`, noteDetails)
+    return service.postData(url, `${id}/AddcollaboratorsNotes?access_token=${token}`, noteDetails)
   }
 }

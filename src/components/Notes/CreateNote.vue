@@ -73,10 +73,10 @@ export default {
             title: this.input.title,
             description: this.input.description
           };
-          const response=notes.addNote(noteDetails);
-          console.log("Response..."+response.msg)
+          notes.addNote(noteDetails);
           this.$refs.updatedNote.getAllNotes();
           alert("Note Added Successfully");
+          this.isdisplay = true;
         } catch (error) {
           console.log(error);
         }
