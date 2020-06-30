@@ -39,8 +39,9 @@ export default {
           title: this.noteDetails.title,
           description: this.noteDetails.description
         };
-        const token = await localStorage.getItem("access_token");
-        notes.updateNote(noteDetails, token);
+        notes.updateNote(noteDetails);
+        this.$root.$refs.updatedNote.closeDialog();
+        this.$root.$refs.updatedNote.getAllNotes();
         alert("Note Updated Successfully");
       } catch (error) {
         console.log(error);

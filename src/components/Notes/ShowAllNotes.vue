@@ -16,16 +16,19 @@
           @click="getId(items)"
           style="margin: 5px"
           class="d-inline-flex"
-          v-for="items in allNotes"
+          v-for="items in allNotes.slice().reverse()"
           :key="items.id"
         >
-          <v-card @click="openDialog(items)">
+          <v-card >
             <v-layout>
-              <v-flex xs10 class="pr-8">
-                <v-card-title >{{items.title}}</v-card-title>
-                <v-textarea flat solo rows="1" v-model="items.description" auto-grow></v-textarea>
+              <v-flex xs12 class="pr-5">
+                <v-card v-model="showImage">
+                  <img src="imageURL" alt="">
+                </v-card>
+                <v-card-title @click="openDialog(items)">{{items.title}}</v-card-title>
+                <v-textarea flat solo rows="1" v-model="items.description" @click="openDialog(items)" auto-grow></v-textarea>
                 <v-card-actions>
-                  <Icon v-bind:note="items" v-bind:card="false" />
+                  <Icon v-bind:note="items" v-bind:card="false" v-on:imageUrl="showImageInCard($event)"/>
                 </v-card-actions>
               </v-flex>
             </v-layout>
@@ -46,7 +49,7 @@ import Icon from "../Icons/ShowNoteIcon";
 import updateNote from "./UpdateNote";
 export default {
   name: "ArchiveNotes",
-  props: ["notes", "card"],
+  props: ["notes", "card", "image"],
   components: {
     updateNote,
     Icon
@@ -58,7 +61,9 @@ export default {
       allNotes: [],
       newArray:[],
       response: "",
-      dialog:""
+      imageURL:"",
+      dialog:"",
+      showImage:"",
     };
   },
   methods: {
@@ -66,10 +71,17 @@ export default {
       this.newArray=items
       this.dialog=true
     },
+    closeDialog() {
+      this.dialog=false
+    },
+    showImageInCard(image){
+      console.log("Inside Show Image Method")
+      this.showImage=true
+      this.imageURL=image
+    },
     async getAllNotes() {
       try {
-        const token = localStorage.getItem("access_token");
-        const response = await notes.getNotes(token);
+        const response = await notes.getNotes();
         const showSelected = response.data.data;
         this.allNotes = showSelected.filter(function(inputNote) {
           return inputNote.isArchived == false && inputNote.isDeleted == false;
@@ -84,7 +96,7 @@ export default {
   },
    created() {
      this.$root.$refs.ShowAllNotes = this;
-     this.$refs.updatedNote.getAllNotes();
+     this.$root.$refs.updatedNote = this;
    },
   mounted() {
     this.getAllNotes();

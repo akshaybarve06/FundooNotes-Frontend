@@ -65,23 +65,20 @@ export default {
           noteIdList: [key],
           isArchived: false
         };
-        const token = localStorage.getItem("access_token");
-        await notes.archiveNote(noteDetails, token);
-        this.$root.$refs.ShowAllArchiveNotes.getArchiveNotes();
+        await notes.archiveNote(noteDetails);
         alert("Note Unarchived Successfully");
+        this.$root.$refs.ShowAllArchiveNotes.getArchiveNotes();
       } catch (error) {
         console.log(error);
       }
     },
     async deleteNote(key) {
       try {
-          console.log("Key..."+key)
         const noteDetails = {
           noteIdList: [key],
           isDeleted: true
         };
-        const token = localStorage.getItem("access_token");
-        await notes.deleteNote(noteDetails, token);
+        await notes.deleteNote(noteDetails);
         alert("Note Deleted Successfully");
         this.$root.$refs.ShowAllArchiveNotes.getArchiveNotes();
       } catch (error) {

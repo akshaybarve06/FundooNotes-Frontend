@@ -49,8 +49,7 @@ export default {
   methods: {
     async getArchiveNotes() {
       try {
-        const token = localStorage.getItem("access_token");
-        const response = await notes.getArchiveNotesList(token);
+        const response = await notes.getArchiveNotesList();
         this.allNotes = response.data.data;
       } catch (error) {
         console.log("error" + error);

@@ -9,73 +9,39 @@
 *
 */
 
-import axios from "axios";
+import service from "./service"
 
 const url = 'http://fundoonotes.incubation.bridgelabz.com/api/notes/'
+const token = localStorage.getItem("access_token");
 
 export default {
-  addNote(noteDetails, token) {
-    return axios
-      .post(url + `addNotes?access_token=${token}`, noteDetails)
-      .then(response => response.data)
-      .catch((error) => {
-        return error;
-      });
+
+  addNote(noteDetails) {
+    console.log("Inside Notes service...")
+    return service.postData(url, `addNotes?access_token=${token}`, noteDetails)
   },
-  archiveNote(noteDetails, token) {
-    return axios
-      .post(url + `archiveNotes?access_token=${token}`, noteDetails)
-      .then(response => response.data)
-      .catch((error) => {
-        return error;
-      });
+  archiveNote(noteDetails) {
+    return service.postData(url, `archiveNotes?access_token=${token}`, noteDetails)
   },
-  updateNote(noteDetails, token) {
-    return axios
-      .post(url + `updateNotes?access_token=${token}`, noteDetails)
-      .then(response => response.data)
-      .catch((error) => {
-        return error;
-      });
+  updateNote(noteDetails) {
+    return service.postData(url, `updateNotes?access_token=${token}`, noteDetails)
   },
-  getNotes(token) {
-    return axios
-      .get(url + `getNotesList?access_token=${token}`)
-      .then(response => response.data)
-      .catch((error) => {
-        return error;
-      });
+  getNotes() {
+    return service.getNotes(url, `getNotesList?access_token=${token}`)
   },
-  deleteNoteForever(noteDetails, token) {
-    return axios
-      .post(url + `deleteForeverNotes?access_token=${token}`, noteDetails)
-      .then(response => response.data)
-      .catch((error) => {
-        return error;
-      });
+  deleteNoteForever(noteDetails) {
+    return service.postData(url, `deleteForeverNotes?access_token=${token}`, noteDetails)
   },
-  deleteNote(noteDetails, token) {
-    return axios
-      .post(url + `trashNotes?access_token=${token}`, noteDetails)
-      .then(response => response.data)
-      .catch((error) => {
-        return error;
-      });
+  deleteNote(noteDetails) {
+    return service.postData(url, `trashNotes?access_token=${token}`, noteDetails)
   },
-  getArchiveNotesList(token) {
-    return axios
-      .get(url + `getArchiveNotesList?access_token=${token}`)
-      .then(response => response.data)
-      .catch((error) => {
-        return error;
-      });
+  getArchiveNotesList() {
+    return service.getNotes(url, `getArchiveNotesList?access_token=${token}`)
   },
-  getAllTrashNotes(token) {
-    return axios
-      .get(url + `getTrashNotesList?access_token=${token}`)
-      .then(response => response.data)
-      .catch((error) => {
-        return error;
-      });
+  getAllTrashNotes() {
+    return service.getNotes(url, `getTrashNotesList?access_token=${token}`)
+  },
+  addCollaboratorNotes(id, noteDetails) {
+    return service.postWithId(url, `${id}` + `/AddcollaboratorsNotes?access_token=${token}`, noteDetails)
   }
 }

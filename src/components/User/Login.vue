@@ -80,6 +80,9 @@ export default {
         const response = await user.login(userDetails);
         localStorage.setItem("access_token", response.id);
         localStorage.setItem("email", response.email);
+        localStorage.setItem("firstName", response.firstName);
+        localStorage.setItem("lastName", response.lastName);
+        localStorage.setItem("userId", response.userId);
         this.input.snackbar = true;
         this.input.snackbarText = "Login SuccessFull "
       } catch (error) {

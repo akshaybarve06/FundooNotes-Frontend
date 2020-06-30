@@ -51,9 +51,9 @@ export default {
           noteIdList: [key],
           isDeleted: false
         };
-        const token = localStorage.getItem("access_token");
-        await notes.deleteNoteForever(noteDetails, token);
+        await notes.deleteNoteForever(noteDetails);
         alert("Note Deleted Forever");
+        this.$root.$refs.getTrashNotes.getTrashNotes();
       } catch (error) {
         console.log("error" + error);
       }
@@ -64,23 +64,25 @@ export default {
           noteIdList: [key],
           isDeleted: false
         };
-        const token = localStorage.getItem("access_token");
-        await notes.deleteNote(noteDetails, token);
+        await notes.deleteNote(noteDetails);
         alert("Note Restored Successfully");
+        this.$root.$refs.getTrashNotes.getTrashNotes();
       } catch (error) {
         console.log("error" + error);
       }
     },
     async getTrashNotes() {
       try {
-        const token = localStorage.getItem("access_token");
-        const response = await notes.getAllTrashNotes(token);
+        const response = await notes.getAllTrashNotes();
         this.allNotes = response.data.data;
       } catch (error) {
         console.log("error" + error);
       }
     }
   },
+  created() {
+     this.$root.$refs.getTrashNotes = this;
+   },
   mounted() {
     this.getTrashNotes();
   }

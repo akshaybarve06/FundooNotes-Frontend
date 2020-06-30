@@ -11,51 +11,37 @@
 <template>
   <v-app id="inspire">
     <v-content>
-      <v-container
-        class="fill-height"
-        fluid
-      >
-        <v-row
-          align="center"
-          justify="center"
-        >
-          <v-col
-            cols="12"
-            sm="8"
-            md="4"
-          >
+      <v-container class="fill-height" fluid>
+        <v-row align="center" justify="center">
+          <v-col cols="12" sm="8" md="4">
             <v-card class="elevation-12">
-              <v-toolbar
-                color="cyan"
-                dark
-                flat
-              >
+              <v-toolbar color="cyan" dark flat>
                 <v-toolbar-title>Enter New Password</v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
-              <v-text-field
-                type="password"
-                v-model="input.newPassword"
-                name="newPassword"
-                label="New Password"
-                :rules="['Required']"
-                autocomplete="off"
-              ></v-text-field>
-              <v-text-field
-                type="password"
-                v-model="input.confirmPaswword"
-                name="confirmPassword"
-                label="Confirm Password"
-                :rules="['Required']"
-                autocomplete="off"
-              ></v-text-field>
-            </v-card-text>
+                <v-text-field
+                  type="password"
+                  v-model="input.newPassword"
+                  name="newPassword"
+                  label="New Password"
+                  :rules="['Required']"
+                  autocomplete="off"
+                ></v-text-field>
+                <v-text-field
+                  type="password"
+                  v-model="input.confirmPaswword"
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  :rules="['Required']"
+                  autocomplete="off"
+                ></v-text-field>
+              </v-card-text>
               <v-card-actions>
-                  <a class="ma-2 pa-2 " href="/login">Back To Login</a>
-                  <v-spacer></v-spacer>
-                  <v-btn round class="cyan ma-3 pa-2" dark v-on:click="resetPassword()">Reset</v-btn>
-            </v-card-actions>
+                <a class="ma-2 pa-2" href="/login">Back To Login</a>
+                <v-spacer></v-spacer>
+                <v-btn round class="cyan ma-3 pa-2" dark v-on:click="resetPassword()">Reset</v-btn>
+              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
@@ -75,7 +61,7 @@ export default {
     return {
       input: {
         newPassword: "",
-        confirmPassword:"",
+        confirmPassword: "",
         snackbar: false,
         snackbarText: ""
       },
@@ -88,15 +74,15 @@ export default {
         const userDetails = {
           newPassword: this.input.newPassword
         };
-        const token=this.$route.params.token
-        await user.reset(userDetails,token);
+        const token = this.$route.params.token;
+        await user.reset(userDetails, token);
         this.input.snackbar = true;
-        this.input.snackbarText = "Password Reset Successfully "
+        this.input.snackbarText = "Password Reset Successfully ";
       } catch (error) {
         console.log(error);
       }
     },
-    goto(){
+    goto() {
       this.$router.push("/login");
     }
   }

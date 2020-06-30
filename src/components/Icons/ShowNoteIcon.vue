@@ -11,31 +11,31 @@
 <template>
   <div>
     <div style="width:170px; display: flex; justify-content:space-between; margin-left:4px;">
-      <md-menu md-size="small" md-align-trigger >
+      <md-menu md-size="small" md-align-trigger>
         <v-btn icon>
           <md-icon md-menu-trigger md-size="small">add_alert</md-icon>
         </v-btn>
         <md-menu-content>
-           <md-menu-item>Later Today - 08.00 PM</md-menu-item>
+          <md-menu-item>Later Today - 08.00 PM</md-menu-item>
           <md-menu-item>Tomorrow - 08.00 AM</md-menu-item>
           <md-menu-item>Next Week - MON 08.00 AM</md-menu-item>
-           <md-datepicker>
+          <md-datepicker>
             <label>Select Custom Date</label>
           </md-datepicker>
         </md-menu-content>
       </md-menu>
-      <v-btn icon>
-        <md-icon >person</md-icon>
+      <v-btn icon @click="openDialog(note.id)">
+        <md-icon>person</md-icon>
       </v-btn>
-      <v-btn icon>
-        <md-icon >color_lens</md-icon>
+      <v-btn icon @click="pickFile()">
+        <md-icon>color_lens</md-icon>
       </v-btn>
-      <input id="fileUpload" type="file" hidden />
-      <v-btn icon @click="chooseFiles()">
-        <md-icon >image</md-icon>
+      <input type="file" ref="file" @change="getFileInputValue" />
+      <v-btn icon @click="$refs.file.click()">
+        <md-icon>image</md-icon>
       </v-btn>
-      <v-btn icon @click="archive(note.id)" >
-        <md-icon >archive</md-icon>
+      <v-btn icon @click="archive(note.id)">
+        <md-icon>archive</md-icon>
       </v-btn>
       <md-menu md-size="small" md-align-trigger v-if="card==true">
         <v-btn icon>
@@ -61,17 +61,42 @@
         </md-menu-content>
       </md-menu>
     </div>
+    <div>
+      <collaborator />
+    </div>
   </div>
 </template>
 <script>
 import notes from "../../services/notes.service";
+import collaborator from "../Notes/AddCollaborator";
 export default {
   name: "Icon",
+  components: {
+    collaborator
+  },
   props: ["note", "card"],
+  data() {
+    return {
+      dialog: "false",
+      selectedFile: "",
+    };
+  },
   methods: {
-    chooseFiles: function() {
-      const file=document.getElementById("fileUpload").click();
-      console.log("Input file.."+file);
+    getFileInputValue(val) {
+      let file = val.target.files[0];
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = val => {
+       this.sendImage(val.target.result);
+      };
+    },
+    sendImage(image){
+        console.log("Inside emit event Method")
+        this.$emit('imageUrl',image)
+    },
+    async openDialog(noteId) {
+      console.log("Hello....There..");
+      this.$root.$refs.A.openDialogBox(noteId);
     },
     async archive(key) {
       try {
@@ -79,8 +104,7 @@ export default {
           noteIdList: [key],
           isArchived: true
         };
-        const token = localStorage.getItem("access_token");
-        await notes.archiveNote(noteDetails, token);
+        await notes.archiveNote(noteDetails);
         alert("Note Archived Successfully");
         this.$root.$refs.ShowAllNotes.getAllNotes();
       } catch (error) {
@@ -93,8 +117,7 @@ export default {
           noteIdList: [key],
           isDeleted: true
         };
-        const token = localStorage.getItem("access_token");
-        await notes.deleteNote(noteDetails, token);
+        await notes.deleteNote(noteDetails);
         alert("Note Deleted Successfully");
         this.$root.$refs.ShowAllNotes.getAllNotes();
       } catch (error) {

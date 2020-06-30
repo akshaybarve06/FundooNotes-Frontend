@@ -8,49 +8,25 @@
 * @since: 01/06/2020- Monday
 *
 */
-import axios from "axios";
+import service from "./service"
 
 const url='http://fundoonotes.incubation.bridgelabz.com/api/user/';
+const token = localStorage.getItem("access_token");
 
 export default {
     login(credentials) {
-      return axios
-      .post(url + 'login', credentials)
-      .then(response => response.data)
-      .catch((error) => {
-        return error;
-      });
+      return service.postData(url, 'login', credentials )
     },
     signUp(data) {
-        return axios
-          .post(url + 'userSignUp', data)
-          .then(response => response.data)
-          .catch((error) => {
-            return error;
-          });
+      return service.postData(url, 'userSignUp', data )
     },
     forget(credentials){
-      return axios
-          .post(url + 'reset', credentials)
-          .then(response => response.data)
-          .catch((error) => {
-            return error;
-          });
+      return service.postData(url, 'reset', credentials )
     },
-    reset(credentials, token){
-      return axios
-          .post(url + `reset-password?access_token=${token}`, credentials)
-          .then(response => response.data)
-          .catch((error) => {
-            return error;
-          });
+    reset(credentials){
+      return service.postData(url, `reset-password?access_token=${token}`, credentials )
     },
-    logout(token){
-      return axios
-          .post(url + `logout?access_token=${token}`)
-          .then(response => response.data)
-          .catch((error) => {
-            return error;
-          });
+    logout(){
+      return service.postWithoutDetails(url, `logout?access_token=${token}`)
     },
 }

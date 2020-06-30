@@ -28,12 +28,12 @@
     </v-main>
     <div>
       <AllNotes ref="updatedNote" />
-    </div>
+    </div>      
   </div>
 </template>
 <script>
 import Icon from "../Icons/ShowNoteIcon";
-import notes from "../../services/notes.service";
+import notes from "../../services/notes.service";                                                                       
 import AllNotes from "../Notes/ShowAllNotes";
 export default {
   name: "CreateNote",
@@ -73,8 +73,8 @@ export default {
             title: this.input.title,
             description: this.input.description
           };
-          const token = await localStorage.getItem("access_token");
-          notes.addNote(noteDetails, token);
+          const response=notes.addNote(noteDetails);
+          console.log("Response..."+response.msg)
           this.$refs.updatedNote.getAllNotes();
           alert("Note Added Successfully");
         } catch (error) {

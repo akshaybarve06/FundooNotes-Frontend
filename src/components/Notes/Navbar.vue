@@ -11,7 +11,7 @@
 <template>
   <v-app>
     <v-app-bar app clipped-left color="amber">
-      <md-button class="md-icon-button" @click="drawer = !drawer">
+      <md-button @click="drawer = !drawer">
         <md-icon>menu</md-icon>
       </md-button>
       <v-toolbar-title>
@@ -120,8 +120,7 @@ export default {
   methods: {
     logout() {
       try {
-        const token = localStorage.getItem("access_token");
-        const response = user.logout(token);
+        const response = user.logout();
         this.snackbar = true;
         this.msg = response.msg;
         this.$router.push("/login");
