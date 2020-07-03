@@ -9,11 +9,11 @@
 *
 -->
 <template>
-  <v-app>
+  <v-app class="navbar">
     <v-app-bar app clipped-left color="amber">
-      <md-button @click="drawer = !drawer">
+      <v-btn icon @click="drawer = !drawer">
         <md-icon>menu</md-icon>
-      </md-button>
+      </v-btn>
       <v-toolbar-title>
         <span>FundooNotes</span>
       </v-toolbar-title>
@@ -43,13 +43,11 @@
             </v-btn>
           </template>
           <v-card>
-            <v-list>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title>{{ userEmail }}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
+              <v-icon class="avtar">account_circle</v-icon>
+              <p class="logoutcard">
+                <span>{{ firstName }} {{ lastName }}</span
+                ><br /><span style="padding-left:20px">{{ userEmail}}</span>
+              </p>
             <v-divider></v-divider>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -71,12 +69,17 @@
               <v-btn small text>edit</v-btn>
             </v-col>
           </v-row>
-          <v-divider v-else-if="link.divider" :key="i" dark class="my-4"></v-divider>
+          <v-divider
+            v-else-if="link.divider"
+            :key="i"
+            dark
+            class="my-4"
+          ></v-divider>
           <v-list-item v-else :key="i" router :to="link.route">
             <v-list-item-action>
               <v-icon>{{ link.icon }}</v-icon>
             </v-list-item-action>
-            <v-list-item-content>
+            <v-list-item-content class="text">
               <v-list-item-title>{{ link.text }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -97,11 +100,13 @@ import user from "../../services/user.service";
 export default {
   name: "Navbar",
   props: {
-    msg: String
+    msg: String,
   },
   data() {
     return {
       userEmail: localStorage.getItem("email"),
+      firstName: localStorage.getItem("firstName"),
+      lastName: localStorage.getItem("lastName"),
       menu: false,
       drawer: true,
       link: 0,
@@ -113,8 +118,8 @@ export default {
         { divider: true },
         { text: "Archive", icon: "archive", route: "archivenotes" },
         { text: "Trash", icon: "delete", route: "trashnotes" },
-        { text: "Help", icon: "help_outline", route: "help" }
-      ]
+        { text: "Help", icon: "help_outline", route: "help" },
+      ],
     };
   },
   methods: {
@@ -127,8 +132,8 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

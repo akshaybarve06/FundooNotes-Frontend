@@ -21,13 +21,13 @@
         >
           <v-card >
             <v-layout>
-              <v-flex xs12 class="pr-5">
+              <v-flex xs10 class="pr-1">
                 <v-card v-model="showImage">
                 </v-card>
                 <v-card-title @click="openDialog(items)">{{items.title}}</v-card-title>
                 <v-textarea flat solo rows="1" v-model="items.description" @click="openDialog(items)" auto-grow></v-textarea>
                 <v-card-actions>
-                  <Icon v-bind:note="items" v-bind:card="false" v-on:imageUrl="showImageInCard($event)"/>
+                  <Icon padding=30px v-bind:note="items" v-bind:card="false" v-on:imageUrl="showImageInCard($event)"/>
                 </v-card-actions>
               </v-flex>
             </v-layout>

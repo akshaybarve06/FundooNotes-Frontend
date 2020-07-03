@@ -3,3 +3,17 @@ $min-height:600px;
 .md-app {
     min-height: $min-height;
   }
+  .navbar{
+    font-family: 'Didact Gothic';
+  }
+.logoutcard{
+  position: relative;
+  padding-top: 20px;
+  padding-right: 50px;
+  text-align: center;
+  margin-left: 20px;
+}
+.avtar{
+  margin-left:100px;
+  margin-top: 30px;
+}

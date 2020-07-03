@@ -9,7 +9,7 @@
 *
 -->
 <template>
-  <div >
+  <div class="showNotes">
     <v-main>
       <div style="margin-bottom: 15px">
         <v-card class="md-layout-item1" v-show="isdisplay" @click="openCard()">
